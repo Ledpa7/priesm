@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://merlin-priesm.sh/sitemap.xml
