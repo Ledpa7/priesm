@@ -9,6 +9,8 @@ import {
   Sparkles,
   Languages,
   Zap,
+  Scale,
+  Terminal,
   PlusSquare,
   ShieldCheck,
   Eye,
@@ -179,7 +181,7 @@ const translations = {
 }
 
 const IconMap: any = {
-  Layers, Zap, PlusSquare,
+  Layers, Zap, Scale, Terminal, PlusSquare,
   ShieldCheck, Eye, Target, UserCheck, Maximize, MousePointer2, Monitor, Database, Languages
 }
 
