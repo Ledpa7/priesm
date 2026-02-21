@@ -67,7 +67,7 @@ const translations = {
     pillar2Desc: 'Eliminate the fatigue of tab-switching. Stay in your flow while triggering all elite models at once.',
     pillar3Title: 'Strategic Workspace',
     pillar3Desc: 'Not a toy. A high-stakes workbench designed for architects who value the precision of parallel reasoning.',
-    philosophy: '"True speed comes from parallel intelligence."',
+    philosophy: '"True productivity is achieved when you compare and find a better answer."',
     philosophyBadge: 'Merlin Efficiency',
     footerTitle: <>Ask Once. Get All.</>,
     footerCTA: 'Install Free Extension',
@@ -118,7 +118,7 @@ const translations = {
     pillar2Desc: '탭을 오가는 피로를 완전히 제거했습니다. 모든 엘리트 모델을 한발의 사격으로 동시에 깨우세요.',
     pillar3Title: '전략가를 위한 작업대',
     pillar3Desc: '단순한 챗봇이 아닙니다. 병렬 추론의 정밀함을 아는 전략가들을 위해 설계된 고성능 아키텍처입니다.',
-    philosophy: '"진정한 생산성은 도구를 옮겨 다니는 시간이 아니라, 정답을 고르는 시간에 집중할 때 완성됩니다."',
+    philosophy: <>"진정한 생산성은 비교를 통해<br />더 나은 답을 찾을 때 완성됩니다."</>,
     philosophyBadge: '멀린 생산성 선언',
     footerTitle: <>한 번만 물어보세요.</>,
     footerCTA: '지금 바로 무료 설치',
@@ -169,7 +169,7 @@ const translations = {
     pillar2Desc: '彻底消除切换标签页的疲劳。在流程中同时触发所有顶尖模型。',
     pillar3Title: '战略工作台',
     pillar3Desc: '不是玩具。为追求并行推理精确性的架构师设计的专业工作站。',
-    philosophy: '"真正的速度源于并行智能。"',
+    philosophy: '"真正的生产力源于通过对比找到更好的答案。"',
     philosophyBadge: '멀린 效率宣言',
     footerTitle: <>问一次，得全部。</>,
     footerCTA: '部署免费扩展',
@@ -185,78 +185,155 @@ const IconMap: any = {
   ShieldCheck, Eye, Target, UserCheck, Maximize, MousePointer2, Monitor, Database, Languages
 }
 
-const Navbar = ({ lang, setLang }: {
+const GlassShard = ({ x, y, id, onComplete }: { x: number, y: number, id: string, onComplete: (id: string) => void }) => {
+  const shards = Array.from({ length: 12 }) // More shards for impact
+
+  return (
+    <div className="pointer-events-none fixed inset-0 z-[999]">
+      {shards.map((_, i) => {
+        const angle = (Math.PI * 2 * i) / shards.length + (Math.random() - 0.5)
+        const distance = 80 + Math.random() * 200
+        const tx = Math.cos(angle) * distance
+        const ty = Math.sin(angle) * distance
+        const duration = 1 + Math.random() * 0.8
+
+        // HIGHLIGHT: Varied Refraction Indices
+        const blur = 2 + Math.random() * 20  // Varied blur strength
+        const saturate = 100 + Math.random() * 300 // Varied color intensity
+        const brightness = 1 + Math.random() * 0.5 // Varied shimmer
+
+        return (
+          <motion.div
+            key={`${id}-${i}`}
+            initial={{
+              x: 0,
+              y: 0,
+              opacity: 1,
+              scale: 0.1,
+              rotate: 0
+            }}
+            animate={{
+              x: tx,
+              y: ty,
+              opacity: 0,
+              scale: 0.8 + Math.random() * 2,
+              rotate: Math.random() * 1080 - 540
+            }}
+            transition={{ duration, ease: [0.23, 1, 0.32, 1] }}
+            onAnimationComplete={() => i === shards.length - 1 && onComplete(id)}
+            className="absolute w-12 h-12 pointer-events-none"
+            style={{
+              left: `${x}px`,
+              top: `${y}px`,
+              clipPath: `polygon(${Math.random() * 100}% ${Math.random() * 100}%, ${Math.random() * 100}% ${Math.random() * 100}%, ${Math.random() * 100}% ${Math.random() * 100}%)`,
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1))',
+              backdropFilter: `blur(${blur}px) saturate(${saturate}%) brightness(${brightness})`,
+              WebkitBackdropFilter: `blur(${blur}px) saturate(${saturate}%) brightness(${brightness})`,
+              border: '1px solid rgba(255, 255, 255, 0.4)',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+              zIndex: 1000
+            }}
+          />
+        )
+      })}
+    </div>
+  )
+}
+
+const Navbar = ({ lang, setLang, onAction }: {
   lang: keyof typeof translations,
-  setLang: (l: keyof typeof translations) => void
+  setLang: (l: keyof typeof translations) => void,
+  onAction: (e: React.MouseEvent) => void
 }) => {
   const [showLang, setShowLang] = useState(false)
   const t = translations[lang]
 
+  const LanguageSwitcher = () => (
+    <div className="relative">
+      <button
+        onClick={(e) => {
+          onAction(e)
+          setShowLang(!showLang)
+        }}
+        className="px-4 py-2.5 rounded-full glass-button-secondary text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 transform active:scale-95 transition-transform"
+      >
+        <Languages className="w-4 h-4" />
+        <span className="opacity-80 uppercase tracking-widest">{lang}</span>
+      </button>
+      <AnimatePresence>
+        {showLang && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            className="absolute top-12 right-0 glass-card p-2 min-w-[120px] border-white/10 shadow-3xl bg-black/60 backdrop-blur-3xl z-[110]"
+          >
+            {(['en', 'ko', 'zh'] as const).map((l) => (
+              <button
+                key={l}
+                onClick={(e) => {
+                  onAction(e)
+                  setLang(l)
+                  setShowLang(false)
+                }}
+                className={`w-full text-left px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${lang === l
+                  ? 'bg-white/20 text-white shadow-lg'
+                  : 'text-white/50 hover:text-white hover:bg-white/10'
+                  }`}
+              >
+                {l === 'en' ? 'English' : l === 'ko' ? '한국어' : '中文'}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+
   return (
-    <nav className="fixed top-0 w-full z-[100] px-6 py-6 flex justify-between items-center backdrop-blur-xl border-b border-black/5 bg-white/20">
+    <nav className="fixed top-0 w-full z-[100] px-8 py-3 flex justify-between items-center backdrop-blur-xl border-b border-white/20 bg-white/[0.02] rounded-b-[40px] shadow-2xl shadow-black/10">
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center">
           <Sparkles className="w-5 h-5 text-white" />
         </div>
         <div className="flex flex-col">
-          <span className="text-xl font-black tracking-tighter leading-none rainbow-text">Merlin</span>
+          <span className="text-xl font-black tracking-tighter leading-none rainbow-text text-[22px]">Merlin</span>
           <span className="text-[7px] font-bold tracking-[0.4em] uppercase text-black/40 ml-0.5">AI Lab</span>
         </div>
       </div>
 
-      <div className="hidden md:flex gap-10 items-center">
-        {t.nav.map((item, idx) => (
-          <a
-            key={item}
-            href={`#${['philosophy', 'features', 'spectrum'][idx]}`}
-            className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-colors"
-          >
-            {item}
-          </a>
-        ))}
-
-        {/* Language Switcher */}
-        <div className="relative">
-          <button
-            onClick={() => setShowLang(!showLang)}
-            className="px-4 py-2.5 rounded-full glass-button-secondary text-[9px] font-black uppercase tracking-[0.2em] flex items-center gap-2"
-          >
-            <Languages className="w-3 h-3" />
-            {lang}
-          </button>
-          <AnimatePresence>
-            {showLang && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className="absolute top-12 right-0 glass-card p-2 min-w-[100px] border-black/5"
-              >
-                {(['en', 'ko', 'zh'] as const).map((l) => (
-                  <button
-                    key={l}
-                    onClick={() => {
-                      setLang(l)
-                      setShowLang(false)
-                    }}
-                    className={`w-full text-left px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors ${lang === l ? 'bg-prism-accent/20 text-black' : 'hover:bg-black/5 text-gray-600 hover:text-black'}`}
-                  >
-                    {l === 'en' ? 'English' : l === 'ko' ? '한국어' : '中文'}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+      <div className="flex items-center gap-4">
+        {/* Mobile View: Top Right */}
+        <div className="md:hidden">
+          <LanguageSwitcher />
         </div>
 
-        <a
-          href={CHROME_STORE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-6 py-2.5 rounded-full glass-button-primary text-[9px] font-black uppercase tracking-[0.2em]"
-        >
-          {t.meet}
-        </a>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex gap-8 items-center border-l border-white/10 pl-8 ml-2">
+          {t.nav.map((item, idx) => (
+            <a
+              key={item}
+              href={`#${['philosophy', 'features', 'spectrum'][idx]}`}
+              onClick={onAction}
+              className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors"
+            >
+              {item}
+            </a>
+          ))}
+
+          {/* Desktop Placement: To the left of Meet Merlin */}
+          <LanguageSwitcher />
+
+          <a
+            href={CHROME_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onAction}
+            className="px-6 py-2.5 rounded-full glass-button-primary text-[9px] font-black uppercase tracking-[0.2em]"
+          >
+            {t.meet}
+          </a>
+        </div>
       </div>
     </nav>
   )
@@ -278,20 +355,42 @@ const SectionHeader = ({ badge, title, desc }: any) => (
 
 const App = () => {
   const containerRef = useRef<HTMLDivElement>(null)
+  const cursorRef = useRef<HTMLDivElement>(null)
   const [lang, setLang] = useState<keyof typeof translations>('en')
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isHovering, setIsHovering] = useState(false)
+  const [shatters, setShatters] = useState<{ id: string, x: number, y: number }[]>([])
   const t = translations[lang]
 
+  const triggerShatter = (e: React.MouseEvent) => {
+    const id = Math.random().toString(36).substring(2, 9)
+    setShatters(prev => [...prev, { id, x: e.clientX, y: e.clientY }])
+  }
+
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return
+    if (!cursorRef.current || !containerRef.current) return
     const { clientX, clientY } = e
     const { innerWidth, innerHeight } = window
 
-    // Normalize coordinates to -1 to 1
+    // OPTIMIZATION: Direct DOM manipulation for cursor movement (60fps)
+    cursorRef.current.style.left = `${clientX}px`
+    cursorRef.current.style.top = `${clientY}px`
+
+    // Normalize coordinates for CSS variables
     const x = (clientX / innerWidth) * 2 - 1
     const y = (clientY / innerHeight) * 2 - 1
 
-    setMousePos({ x, y })
+    containerRef.current.style.setProperty('--mouse-x', x.toString())
+    containerRef.current.style.setProperty('--mouse-y', y.toString())
+
+    // Dynamic rotation based on movement
+    const r = (x * 12) - 45
+    cursorRef.current.style.transform = `translate(-50%, 0) rotate(${r}deg) scale(${isHovering ? 1.4 : 1})`
+    cursorRef.current.style.opacity = '1'
+
+    // Check if hovering over interactive element
+    const target = e.target as HTMLElement
+    const interactive = !!target.closest('a, button')
+    if (interactive !== isHovering) setIsHovering(interactive)
   }
 
   return (
@@ -299,19 +398,44 @@ const App = () => {
       ref={containerRef}
       className="relative select-none text-sm md:text-base overflow-x-hidden"
       onMouseMove={handleMouseMove}
-      style={{
-        // @ts-ignore
-        '--mouse-x': mousePos.x,
-        '--mouse-y': mousePos.y,
-      } as React.CSSProperties}
     >
+      {/* Prism Cursor - Ref Driven Animation */}
+      <div
+        ref={cursorRef}
+        className="prism-cursor pointer-events-none fixed opacity-0 transition-opacity duration-300"
+        style={{ zIndex: 10000 }}
+      />
       <div className="mesh-bg" />
       <div className="mesh-overlay" />
       <div className="mesh-vignette" />
-      <Navbar lang={lang} setLang={setLang} />
+
+      <Navbar lang={lang} setLang={setLang} onAction={triggerShatter} />
+
+      {/* Glass Shatter Particles */}
+      <AnimatePresence>
+        {shatters.map(s => (
+          <GlassShard
+            key={s.id}
+            x={s.x}
+            y={s.y}
+            id={s.id}
+            onComplete={(id) => {
+              setShatters(prev => prev.filter(sh => sh.id !== id))
+            }}
+          />
+        ))}
+      </AnimatePresence>
+
+      {/* Hidden SVG Filter for Refraction */}
+      <svg className="hidden">
+        <filter id="prism-refraction">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" />
+        </filter>
+      </svg>
 
       {/* Hero Section */}
-      <section id="philosophy" className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-32 px-6">
+      <section id="philosophy" className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-20 md:pt-32 md:pb-32 px-6">
         <motion.div
           key={lang}
           initial={{ opacity: 0, y: 20 }}
@@ -319,15 +443,15 @@ const App = () => {
           transition={{ duration: 0.5 }}
           className="text-center z-10"
         >
-          <div className="mb-8 inline-block">
+          <div className="mb-4 md:mb-8 inline-block">
             <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-600">{t.heroBadge}</span>
           </div>
 
-          <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1] mb-10 hero-gradient-text">
+          <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1] mb-6 md:mb-10 hero-gradient-text">
             {t.heroTitle}
           </h1>
 
-          <p className="max-w-2xl mx-auto text-gray-600 text-lg md:text-xl font-medium mb-16 leading-relaxed">
+          <p className="max-w-2xl mx-auto text-gray-600 text-base md:text-xl font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
             {t.heroDesc}
           </p>
 
@@ -336,7 +460,8 @@ const App = () => {
               href={CHROME_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em] flex items-center gap-3"
+              onClick={triggerShatter}
+              className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em] flex items-center gap-3 transform active:scale-95 transition-transform"
             >
               {t.ctaExperience} <ChevronRight className="w-5 h-5" />
             </a>
@@ -438,6 +563,7 @@ const App = () => {
               href={CHROME_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={triggerShatter}
               className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em]"
             >
               {t.footerCTA}
