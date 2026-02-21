@@ -6,13 +6,15 @@ This dashboard tracks the current status, design decisions, and technical specif
 - **Project Name:** Merlin AI Lab (Project "Pr!esm" during development)
 - **Objective:** Create a premium, high-converting landing page for the Merlin Multi-LLM ecosystem.
 - **Current Version:** v2.7.1-alpha (Rebranding Phase)
-- **Last Updated:** 2026-02-20
+- **SEO Subdomain:** `priesm.ledpa7.com`
+- **Last Updated:** 2026-02-21
 
 ## 💎 Visual & Design Identity
 - **Core Aesthetic:** Glassmorphism, Dark Mode (#010101), High-frequency prismatic light.
 - **Background Engine:** **Option D: Crystal Refraction (True Prism)**
   - **Spectral Palette:** Full ROYGBIV (7-color) refraction lines.
-  - **Dynamic Overlay:** Automatic "Breathing" animation.
+  - **Dynamic Overlay:** Automatic "Breathing" animation + **Mouse Hover Interaction**.
+  - **Interactive Refraction:** Background shifts and distorts based on cursor position.
   - **Timing:** 10s cycle (Fade in/out) | 40s rotation (Core rays).
   - **Opacity Range:** 20% (Base) to 100% (Peak Overlay).
 - **Typography:** Inter (Standard) with `rainbow-text` gradients for branding.
@@ -24,20 +26,22 @@ This dashboard tracks the current status, design decisions, and technical specif
 - [x] **Future Roadmap:** Interactive sections for Merlin Search and Merlin Studio.
 - [x] **Adaptive Layout:** Fully responsive from Mobile to Desktop.
 - [x] **Auto-Breathing UI:** Automated background transition without user input.
+- [x] **Mouse Refraction:** Dynamic background distortion on hover.
 
 ## 🧪 Technical Stack
 - **Framework:** React + Vite + TypeScript
 - **Styling:** Tailwind CSS + Vanilla CSS (for complex animations)
 - **Icons:** Lucide-React
-- **Animations:** Framer Motion (Transitions) + CSS Keyframes (Background)
+- **Animations:** Framer Motion (Transitions) + CSS Variables (Interactive Background)
 - **Deployment Port:** Consistent on `5173`.
 
 ## 📍 Current State & Next Steps
-- **Branch/Folder:** `priesm-homepage` (Pending rename to `6-priesm-homepage`)
-- **Active Task:** Finalizing rebranding copy and visual consistency.
+- **Branch/Folder:** `6-priesm-homepage`
+- **Active Task:** Finalizing interactive effects and SEO alignment.
 - **Next Goal:** 
-  - [ ] Implement hover-based refraction shifts.
+  - [ ] Implement smooth scroll logic for navigation.
   - [ ] Finalize "Lab" section experimental models.
+  - [x] All SEO links pointing to `priesm.ledpa7.com`.
   - [ ] Commit current state to Git.
 
 ---

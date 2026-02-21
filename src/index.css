@@ -33,9 +33,41 @@ body::before {
   position: fixed;
   inset: 0;
   background-color: #ffffff;
-  z-index: -1;
+  z-index: -2;
   overflow: hidden;
-  animation: prism-breathing 8s ease-in-out infinite alternate;
+  pointer-events: none;
+  /* Re-integrated breathing effect on opacity to avoid transform conflicts */
+  animation: prism-breathing 10s ease-in-out infinite alternate;
+  /* Concentrated scale for better detail visibility */
+  transform: scale(1.1) translate(calc(var(--mouse-x, 0) * -30px), calc(var(--mouse-y, 0) * -30px));
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes prism-breathing {
+  0% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.mesh-overlay {
+  position: fixed;
+  inset: 0;
+  /* Removed the white-washing sweep, kept only a very subtle highlight */
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.mesh-vignette {
+  position: fixed;
+  inset: 0;
+  /* Stronger vignette to make the colors POP in the center */
+  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.05) 100%);
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -58,67 +90,91 @@ body::before {
 .mesh-bg::before {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 250vw;
-  height: 250vh;
-  transform: translate(-50%, -50%);
-  background:
-    radial-gradient(circle at center, rgba(99, 102, 241, 0.3) 0%, transparent 60%),
-    conic-gradient(from 180deg at 50% 50%,
-      transparent 0deg,
-      rgba(239, 68, 68, 0.35) 60deg,
-      transparent 120deg,
-      rgba(59, 130, 246, 0.35) 180deg,
-      transparent 240deg,
-      rgba(16, 185, 129, 0.3) 300deg,
-      transparent 360deg);
-  filter: blur(15px);
-  animation: crystal-rotate 12s linear infinite;
+  top: -50%;
+  left: -50%;
+  width: 200vw;
+  height: 200vh;
+  /* High-Contrast Spectrum */
+  background: linear-gradient(45deg,
+      rgba(239, 68, 68, 0.45) 0%,
+      rgba(249, 115, 22, 0.45) 15%,
+      rgba(234, 179, 8, 0.45) 30%,
+      rgba(34, 197, 94, 0.45) 45%,
+      rgba(59, 130, 246, 0.45) 60%,
+      rgba(99, 102, 241, 0.45) 75%,
+      rgba(168, 85, 247, 0.45) 90%,
+      rgba(239, 68, 68, 0.45) 100%);
+  background-size: 200% 200%;
+  filter: blur(25px);
+  animation: bg-surge 15s ease-in-out infinite alternate;
+  opacity: 0.8;
 }
 
 .mesh-bg::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: -50%;
+  left: -50%;
   width: 200vw;
   height: 200vh;
-  transform: translate(-50%, -50%);
-  background:
-    repeating-conic-gradient(from 5deg at 50% 50%,
-      rgba(239, 68, 68, 0.15) 0deg 0.2deg,
-      transparent 0.2deg 15deg,
-      rgba(59, 130, 246, 0.15) 20deg 20.2deg,
-      transparent 20.2deg 35deg);
-  mask-image: radial-gradient(circle at center, white 10%, transparent 70%);
-  -webkit-mask-image: radial-gradient(circle at center, white 10%, transparent 70%);
-  filter: blur(4px);
-  /* Increased blur to soften the lines further */
-  animation: crystal-shimmer 12s ease-in-out infinite alternate;
-  opacity: 0.8;
-  /* Reduced opacity */
+  /* Distinct Refraction Lines */
+  background: repeating-linear-gradient(-45deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 2%,
+      transparent 4%);
+  background-size: 100% 100%;
+  mask-image: radial-gradient(circle at center, white 0%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, white 0%, transparent 80%);
+  animation: lines-flow 20s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes bg-surge {
+  0% {
+    background-position: 0% 0%;
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    background-position: 100% 100%;
+    transform: rotate(5deg) scale(1.1);
+  }
+
+  100% {
+    background-position: 0% 100%;
+    transform: rotate(-5deg) scale(1);
+  }
+}
+
+@keyframes lines-flow {
+  from {
+    transform: rotate(0deg) translate(0, 0);
+  }
+
+  to {
+    transform: rotate(360deg) translate(20px, 20px);
+  }
 }
 
 @keyframes crystal-rotate {
   from {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(0deg);
   }
 
   to {
-    transform: translate(-50%, -50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes crystal-shimmer {
   0% {
     opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    transform: scale(1);
   }
 
   100% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1) rotate(10deg);
+    transform: scale(1.1);
   }
 }
 

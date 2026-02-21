@@ -277,13 +277,37 @@ const SectionHeader = ({ badge, title, desc }: any) => (
 
 
 const App = () => {
-  const containerRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const [lang, setLang] = useState<keyof typeof translations>('en')
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const t = translations[lang]
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return
+    const { clientX, clientY } = e
+    const { innerWidth, innerHeight } = window
+
+    // Normalize coordinates to -1 to 1
+    const x = (clientX / innerWidth) * 2 - 1
+    const y = (clientY / innerHeight) * 2 - 1
+
+    setMousePos({ x, y })
+  }
+
   return (
-    <div ref={containerRef} className="relative select-none text-sm md:text-base">
+    <div
+      ref={containerRef}
+      className="relative select-none text-sm md:text-base overflow-x-hidden"
+      onMouseMove={handleMouseMove}
+      style={{
+        // @ts-ignore
+        '--mouse-x': mousePos.x,
+        '--mouse-y': mousePos.y,
+      } as React.CSSProperties}
+    >
       <div className="mesh-bg" />
+      <div className="mesh-overlay" />
+      <div className="mesh-vignette" />
       <Navbar lang={lang} setLang={setLang} />
 
       {/* Hero Section */}
