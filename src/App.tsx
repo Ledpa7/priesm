@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Globe,
@@ -79,8 +79,8 @@ const translations = {
   ko: {
     nav: ['철학', '핵심 기능', '스펙트럼'],
     meet: 'Merlin 설치하기',
-    heroBadge: '최강의 멀티AI 지휘소',
-    heroTitle: <>질문은 한 번,<br /><span className="rainbow-text">멀티AI 동시 비교.</span></>,
+    heroBadge: '여러 AI를 한번에 지휘하는',
+    heroTitle: <>질문은 한번,<br /><span className="rainbow-text">여러 AI를<br className="md:hidden" /> 동시 비교</span></>,
     heroDesc: <>비교를 위해 탭을 오가던 행동은 이제 끝.<br />멀티AI 병렬 지능으로 Gemini, ChatGPT, Claude를 동시에 깨우세요.<br />한 화면에서 쏟아지는 답변 중 최고를 고르기만 하면 됩니다.</>,
     ctaExperience: '무료 멀티AI 시작하기',
     ctaExplore: '로드맵 확인',
@@ -185,65 +185,124 @@ const IconMap: any = {
   ShieldCheck, Eye, Target, UserCheck, Maximize, MousePointer2, Monitor, Database, Languages
 }
 
-const GlassShard = ({ x, y, id, onComplete }: { x: number, y: number, id: string, onComplete: (id: string) => void }) => {
-  const shards = Array.from({ length: 12 }) // More shards for impact
+// 🌈 CIRCULATING RAINBOW ENGINE - High-Performance Prismatic Flow
+const RandomMesh = React.memo(() => {
+  const rainbowGradient = useMemo(() => `
+    radial-gradient(circle at center, rgba(255,255,255,0.65) 0%, transparent 65%),
+    conic-gradient(from 0deg at 50% 50%,
+      rgba(239, 68, 68, 0.5) 0deg,
+      rgba(239, 68, 68, 0.4) 30deg,
+      rgba(249, 115, 22, 0.35) 75deg,
+      rgba(234, 179, 8, 0.35) 120deg,
+      rgba(34, 197, 94, 0.3) 165deg,
+      rgba(59, 130, 246, 0.35) 210deg,
+      rgba(99, 102, 241, 0.45) 260deg,
+      rgba(168, 85, 247, 0.35) 310deg,
+      rgba(239, 68, 68, 0.5) 360deg
+    )
+  `, [])
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[999]">
-      {shards.map((_, i) => {
-        const angle = (Math.PI * 2 * i) / shards.length + (Math.random() - 0.5)
-        const distance = 80 + Math.random() * 200
-        const tx = Math.cos(angle) * distance
-        const ty = Math.sin(angle) * distance
-        const duration = 1 + Math.random() * 0.8
-
-        // HIGHLIGHT: Varied Refraction Indices
-        const blur = 2 + Math.random() * 20  // Varied blur strength
-        const saturate = 100 + Math.random() * 300 // Varied color intensity
-        const brightness = 1 + Math.random() * 0.5 // Varied shimmer
-
-        return (
-          <motion.div
-            key={`${id}-${i}`}
-            initial={{
-              x: 0,
-              y: 0,
-              opacity: 1,
-              scale: 0.1,
-              rotate: 0
-            }}
-            animate={{
-              x: tx,
-              y: ty,
-              opacity: 0,
-              scale: 0.8 + Math.random() * 2,
-              rotate: Math.random() * 1080 - 540
-            }}
-            transition={{ duration, ease: [0.23, 1, 0.32, 1] }}
-            onAnimationComplete={() => i === shards.length - 1 && onComplete(id)}
-            className="absolute w-12 h-12 pointer-events-none"
-            style={{
-              left: `${x}px`,
-              top: `${y}px`,
-              clipPath: `polygon(${Math.random() * 100}% ${Math.random() * 100}%, ${Math.random() * 100}% ${Math.random() * 100}%, ${Math.random() * 100}% ${Math.random() * 100}%)`,
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1))',
-              backdropFilter: `blur(${blur}px) saturate(${saturate}%) brightness(${brightness})`,
-              WebkitBackdropFilter: `blur(${blur}px) saturate(${saturate}%) brightness(${brightness})`,
-              border: '1px solid rgba(255, 255, 255, 0.4)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-              zIndex: 1000
-            }}
-          />
-        )
-      })}
+    <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -10, contain: 'strict' }}>
+      <div className="mesh-bg">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 55, ease: "linear", repeat: Infinity }}
+          className="absolute top-[-150vh] left-[-150vw] w-[400vw] h-[400vh]"
+          style={{
+            background: rainbowGradient,
+            filter: 'blur(105px)',
+            transformOrigin: '50% 50%',
+            willChange: 'transform'
+          }}
+        />
+      </div>
+      <div className="mesh-overlay" />
+      <div className="mesh-vignette" />
     </div>
+  )
+})
+
+// 💎 OPTIMIZED PRISMATIC SHARD - GPU Accelerated & Visual Polish
+const PrismaticShard = ({ x, y, tx, ty, size, color, delay, onComplete }: any) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+      animate={{
+        opacity: [0, 1, 1, 0],
+        scale: [0, size, size * 0.7],
+        x: tx,
+        y: ty,
+        rotate: [0, Math.random() * 360, Math.random() * 720]
+      }}
+      transition={{
+        duration: 0.8 + Math.random() * 0.4,
+        delay,
+        ease: [0.23, 1, 0.32, 1]
+      }}
+      onAnimationComplete={onComplete}
+      className="fixed pointer-events-none"
+      style={{
+        left: `${x}px`,
+        top: `${y}px`,
+        zIndex: 9999999,
+        width: `${size * 20}px`,
+        height: `${size * 20}px`,
+        background: `linear-gradient(135deg, #fff 0%, ${color} 100%)`,
+        clipPath: `polygon(${Math.random() * 100}% ${Math.random() * 100}%, ${Math.random() * 100}% ${Math.random() * 100}%, ${Math.random() * 100}% ${Math.random() * 100}%)`,
+        backdropFilter: 'blur(2px)',
+        filter: 'brightness(1.4) contrast(1.1)',
+        boxShadow: `0 0 25px ${color}66`,
+        border: '0.5px solid rgba(255,255,255,0.8)',
+        willChange: 'transform, opacity'
+      }}
+    />
   )
 }
 
-const Navbar = ({ lang, setLang, onAction }: {
+// 🚀 ROBUST ENGINE: Listens to everything, everywhere.
+const PrismaticBurstEngine = () => {
+  const [bursts, setBursts] = useState<any[]>([])
+
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      const id = Math.random().toString(36).substring(2, 11)
+      const newShards = Array.from({ length: 14 }).map((_, i) => ({
+        id: `${id}-${i}`,
+        x: e.clientX,
+        y: e.clientY,
+        tx: (Math.random() - 0.5) * 600,
+        ty: (Math.random() - 0.5) * 600,
+        size: 0.4 + Math.random() * 1.8,
+        color: ['#818cf8', '#c084fc', '#f472b6', '#60a5fa', '#ffffff'][Math.floor(Math.random() * 5)],
+        delay: Math.random() * 0.05
+      }))
+      setBursts(prev => [...prev, ...newShards])
+    }
+
+    // Use mousedown for instant response on every click anywhere in the window
+    window.addEventListener('mousedown', handleGlobalClick, { capture: true })
+    return () => window.removeEventListener('mousedown', handleGlobalClick, { capture: true })
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {bursts.map(b => (
+        <PrismaticShard
+          key={b.id}
+          {...b}
+          onComplete={() => {
+            setBursts(prev => prev.filter(p => p.id !== b.id))
+          }}
+        />
+      ))}
+    </AnimatePresence>
+  )
+}
+
+const Navbar = React.memo(({ lang, setLang }: {
   lang: keyof typeof translations,
-  setLang: (l: keyof typeof translations) => void,
-  onAction: (e: React.MouseEvent) => void
+  setLang: (l: keyof typeof translations) => void
 }) => {
   const [showLang, setShowLang] = useState(false)
   const t = translations[lang]
@@ -251,8 +310,7 @@ const Navbar = ({ lang, setLang, onAction }: {
   const LanguageSwitcher = () => (
     <div className="relative">
       <button
-        onClick={(e) => {
-          onAction(e)
+        onClick={() => {
           setShowLang(!showLang)
         }}
         className="px-4 py-2.5 rounded-full glass-button-secondary text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 transform active:scale-95 transition-transform"
@@ -271,8 +329,7 @@ const Navbar = ({ lang, setLang, onAction }: {
             {(['en', 'ko', 'zh'] as const).map((l) => (
               <button
                 key={l}
-                onClick={(e) => {
-                  onAction(e)
+                onClick={() => {
                   setLang(l)
                   setShowLang(false)
                 }}
@@ -314,7 +371,6 @@ const Navbar = ({ lang, setLang, onAction }: {
             <a
               key={item}
               href={`#${['philosophy', 'features', 'spectrum'][idx]}`}
-              onClick={onAction}
               className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors"
             >
               {item}
@@ -328,7 +384,6 @@ const Navbar = ({ lang, setLang, onAction }: {
             href={CHROME_STORE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={onAction}
             className="px-6 py-2.5 rounded-full glass-button-primary text-[9px] font-black uppercase tracking-[0.2em]"
           >
             {t.meet}
@@ -337,9 +392,8 @@ const Navbar = ({ lang, setLang, onAction }: {
       </div>
     </nav>
   )
-}
-
-const SectionHeader = ({ badge, title, desc }: any) => (
+})
+const SectionHeader = React.memo(({ badge, title, desc }: any) => (
   <div className="mb-20 flex flex-col items-center text-center">
     <div className="flex items-center gap-4 mb-6">
       <div className="w-10 h-[1px] bg-prism-accent" />
@@ -349,7 +403,7 @@ const SectionHeader = ({ badge, title, desc }: any) => (
     <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-[1.1]">{title}</h2>
     <p className="max-w-2xl text-gray-600 text-sm md:text-base leading-relaxed">{desc}</p>
   </div>
-)
+))
 
 
 
@@ -358,13 +412,7 @@ const App = () => {
   const cursorRef = useRef<HTMLDivElement>(null)
   const [lang, setLang] = useState<keyof typeof translations>('en')
   const [isHovering, setIsHovering] = useState(false)
-  const [shatters, setShatters] = useState<{ id: string, x: number, y: number }[]>([])
   const t = translations[lang]
-
-  const triggerShatter = (e: React.MouseEvent) => {
-    const id = Math.random().toString(36).substring(2, 9)
-    setShatters(prev => [...prev, { id, x: e.clientX, y: e.clientY }])
-  }
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cursorRef.current || !containerRef.current) return
@@ -399,32 +447,19 @@ const App = () => {
       className="relative select-none text-sm md:text-base overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
+      <RandomMesh />
+      <PrismaticBurstEngine />
+
       {/* Prism Cursor - Ref Driven Animation */}
       <div
         ref={cursorRef}
         className="prism-cursor pointer-events-none fixed opacity-0 transition-opacity duration-300"
         style={{ zIndex: 10000 }}
       />
-      <div className="mesh-bg" />
-      <div className="mesh-overlay" />
-      <div className="mesh-vignette" />
 
-      <Navbar lang={lang} setLang={setLang} onAction={triggerShatter} />
+      {/* 🔮 GLOBAL EFFECT ENGINE - Topmost Layer Trigger */}
 
-      {/* Glass Shatter Particles */}
-      <AnimatePresence>
-        {shatters.map(s => (
-          <GlassShard
-            key={s.id}
-            x={s.x}
-            y={s.y}
-            id={s.id}
-            onComplete={(id) => {
-              setShatters(prev => prev.filter(sh => sh.id !== id))
-            }}
-          />
-        ))}
-      </AnimatePresence>
+      <Navbar lang={lang} setLang={setLang} />
 
       {/* Hidden SVG Filter for Refraction */}
       <svg className="hidden">
@@ -436,6 +471,7 @@ const App = () => {
 
       {/* Hero Section */}
       <section id="philosophy" className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-20 md:pt-32 md:pb-32 px-6">
+        <div className="hero-glow" />
         <motion.div
           key={lang}
           initial={{ opacity: 0, y: 20 }}
@@ -447,11 +483,11 @@ const App = () => {
             <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-600">{t.heroBadge}</span>
           </div>
 
-          <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1] mb-6 md:mb-10 hero-gradient-text">
+          <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1.15] mb-6 md:mb-10 hero-gradient-text">
             {t.heroTitle}
           </h1>
 
-          <p className="max-w-2xl mx-auto text-gray-600 text-base md:text-xl font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
+          <p className="max-w-2xl mx-auto text-gray-600 text-sm md:text-lg font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
             {t.heroDesc}
           </p>
 
@@ -460,7 +496,6 @@ const App = () => {
               href={CHROME_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={triggerShatter}
               className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em] flex items-center gap-3 transform active:scale-95 transition-transform"
             >
               {t.ctaExperience} <ChevronRight className="w-5 h-5" />
@@ -563,7 +598,6 @@ const App = () => {
               href={CHROME_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={triggerShatter}
               className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em]"
             >
               {t.footerCTA}
@@ -593,6 +627,7 @@ const App = () => {
           </div>
         </div>
       </footer>
+
     </div>
   )
 }

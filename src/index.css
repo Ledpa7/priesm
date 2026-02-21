@@ -10,17 +10,29 @@
 }
 
 body {
-  background-color: var(--prism-bg);
   color: #1a1a1a;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: none;
   /* Hide default cursor to use the Prism Cursor */
+}
+
+/* Only hide default cursor on desktop */
+@media (min-width: 768px) {
+  body {
+    cursor: none;
+  }
+
+  a,
+  button {
+    cursor: none !important;
+  }
 }
 
 /* Prism Cursor Styles - Clean & Pure Glass */
 .prism-cursor {
+  display: none;
+  /* Hidden on mobile */
   position: fixed;
   top: 0;
   left: 0;
@@ -37,6 +49,12 @@ body {
   transform-origin: 50% 0%;
   transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
   will-change: transform, left, top;
+}
+
+@media (min-width: 768px) {
+  .prism-cursor {
+    display: block;
+  }
 }
 
 .prism-cursor::before,
@@ -65,12 +83,12 @@ body::before {
 .mesh-bg {
   position: fixed;
   inset: 0;
-  background-color: #ffffff;
-  z-index: -2;
+  background-color: transparent;
+  z-index: -10;
   overflow: hidden;
   pointer-events: none;
   /* Re-integrated breathing effect on opacity to avoid transform conflicts */
-  animation: prism-breathing 8s ease-in-out infinite alternate;
+  animation: prism-breathing 5s ease-in-out infinite alternate;
   transform: scale(1.1);
 }
 
@@ -91,7 +109,7 @@ body::before {
   inset: 0;
   /* Removed the white-washing sweep, kept only a very subtle highlight */
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-  z-index: -1;
+  z-index: -5;
   pointer-events: none;
 }
 
@@ -100,7 +118,7 @@ body::before {
   inset: 0;
   /* Stronger vignette to make the colors POP in the center */
   background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.05) 100%);
-  z-index: -1;
+  z-index: -5;
   pointer-events: none;
 }
 
@@ -109,26 +127,25 @@ body::before {
 .mesh-bg::before {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
+  top: -100vh;
+  left: -100vw;
   width: 300vw;
   height: 300vh;
-  /* High-Density Spectrum - Prevents single color washing out */
+  /* Ensure rotation is centered on screen */
+  transform-origin: center center;
+  /* Full Prismatic Spectrum - Restored all 7 colors */
   background: linear-gradient(45deg,
       rgba(239, 68, 68, 0.5) 0%,
-      rgba(249, 115, 22, 0.5) 10%,
-      rgba(234, 179, 8, 0.5) 20%,
-      rgba(34, 197, 94, 0.5) 30%,
-      rgba(59, 130, 246, 0.5) 40%,
-      rgba(99, 102, 241, 0.5) 50%,
-      rgba(168, 85, 247, 0.5) 60%,
-      rgba(239, 68, 68, 0.5) 75%,
-      rgba(59, 130, 246, 0.5) 90%,
-      rgba(234, 179, 8, 0.5) 100%);
-  background-size: 150% 150%;
+      rgba(249, 115, 22, 0.4) 15%,
+      rgba(234, 179, 8, 0.4) 30%,
+      rgba(34, 197, 94, 0.4) 45%,
+      rgba(59, 130, 246, 0.4) 60%,
+      rgba(99, 102, 241, 0.5) 75%,
+      rgba(168, 85, 247, 0.4) 90%,
+      rgba(239, 68, 68, 0.5) 100%);
+  background-size: 200% 200%;
   filter: blur(10px);
-  animation: bg-surge 12s ease-in-out infinite alternate;
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .mesh-bg::after {
@@ -146,24 +163,24 @@ body::before {
   background-size: 100% 100%;
   mask-image: radial-gradient(circle at center, white 0%, transparent 80%);
   -webkit-mask-image: radial-gradient(circle at center, white 0%, transparent 80%);
-  animation: lines-flow 20s linear infinite;
+  animation: lines-flow 5s linear infinite;
   opacity: 0.5;
 }
 
 @keyframes bg-surge {
   0% {
-    background-position: 20% 20%;
-    transform: rotate(0deg);
+    background-position: 0% 0%;
+    transform: rotate(0deg) scale(1);
   }
 
   50% {
-    background-position: 40% 40%;
-    transform: rotate(5deg);
+    background-position: 100% 100%;
+    transform: rotate(15deg) scale(1.15);
   }
 
   100% {
-    background-position: 20% 40%;
-    transform: rotate(-5deg);
+    background-position: 50% 0%;
+    transform: rotate(-10deg) scale(1.05);
   }
 }
 
