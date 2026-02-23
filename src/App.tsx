@@ -79,10 +79,10 @@ const translations = {
   ko: {
     nav: ['철학', '핵심 기능', '스펙트럼'],
     meet: 'Merlin 설치하기',
-    heroBadge: '여러 AI를 한번에 지휘하는',
-    heroTitle: <>질문은 한번,<br /><span className="rainbow-text">여러 AI를<br className="md:hidden" /> 동시 비교</span></>,
-    heroDesc: <>비교를 위해 탭을 오가던 행동은 이제 끝.<br />멀티AI 병렬 지능으로 Gemini, ChatGPT, Claude를 동시에 깨우세요.<br />한 화면에서 쏟아지는 답변 중 최고를 고르기만 하면 됩니다.</>,
-    ctaExperience: '무료 멀티AI 시작하기',
+    heroBadge: 'Multi-AI Orchestrator',
+    heroTitle: <>질문은 한번,<br /><span className="rainbow-text">Multi-AI<br className="md:hidden" /> 동시 비교</span></>,
+    heroDesc: <>비교를 위해 탭을 오가던 행동은 이제 끝.<br />Multi-AI 병렬 지능으로 Gemini, ChatGPT, Claude를 동시에 깨우세요.<br />한 화면에서 쏟아지는 답변 중 최고를 고르기만 하면 됩니다.</>,
+    ctaExperience: '무료 Multi-AI 시작하기',
     ctaExplore: '로드맵 확인',
     question: '하나의 질문',
     perspective: '멀티AI 답변',
@@ -130,8 +130,8 @@ const translations = {
   zh: {
     nav: ['哲学', '核心功能', '光谱'],
     meet: '遇见 Merlin',
-    heroBadge: '极致效率',
-    heroTitle: <>一次提问，<br /><span className="rainbow-text">立即同时对比.</span></>,
+    heroBadge: 'Multi-AI Orchestrator',
+    heroTitle: <>一次提问，<br /><span className="rainbow-text">Multi-AI 同时对比.</span></>,
     heroDesc: <>告别为了对比而进行的标签页切换。<br />只需一个提问，即可同时唤醒 Gemini, ChatGPT 和 Claude。<br />您只需从海量答案中择优而用。</>,
     ctaExperience: '免费体验',
     ctaExplore: '查看路线图',
@@ -516,20 +516,21 @@ const App = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
           {t.mainFeatures.map((feat: any) => (
-            <div key={feat.id} className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all">
+            <div key={feat.id} className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all" role="article">
               <div className="w-16 h-16 rounded-full bg-black/5 flex items-center justify-center mb-6 text-prism-accent group-hover:scale-110 transition-transform">
-                {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-8 h-8" })}
+                {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-8 h-8", "aria-hidden": "true" })}
               </div>
               <h3 className="text-sm font-black uppercase tracking-[0.2em]">{feat.title}</h3>
+              <span className="sr-only">Merlin {feat.title} feature</span>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32" role="list">
           {t.detailedFeatures.map((feat: any, idx: number) => (
-            <div key={idx} className="glass-card p-6 flex items-center gap-5 group hover:bg-black/5 transition-all">
+            <div key={idx} className="glass-card p-6 flex items-center gap-5 group hover:bg-black/5 transition-all" role="listitem">
               <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-prism-accent group-hover:scale-110 transition-transform flex-shrink-0">
-                {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5" })}
+                {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5", "aria-hidden": "true" })}
               </div>
               <p className="text-gray-600 text-sm font-medium leading-relaxed group-hover:text-black transition-colors text-left transition-all">
                 {feat.text}
