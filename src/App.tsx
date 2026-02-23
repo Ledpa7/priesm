@@ -393,15 +393,71 @@ const Navbar = React.memo(({ lang, setLang }: {
     </nav>
   )
 })
+// 💎 REFRACTIVE BLUR REVEAL - Focusing intellectual clarity
+const BlurReveal = ({ children, delay = 0 }: any) => (
+  <motion.div
+    initial={{ opacity: 0, filter: 'blur(15px)', y: 20 }}
+    whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+    transition={{ duration: 1.2, delay, ease: [0.19, 1, 0.22, 1] }}
+    viewport={{ once: true }}
+  >
+    {children}
+  </motion.div>
+)
+
+// 🌈 SPECTRAL MULTI-LAYER REVEAL - Prism color separation effect
+const SpectralReveal = ({ children, delay = 0 }: any) => {
+  return (
+    <div className="relative inline-block">
+      {/* Red Layer */}
+      <motion.div
+        initial={{ opacity: 0, x: -10, filter: 'blur(10px)' }}
+        animate={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 1.5, delay: delay + 0.1, ease: "easeOut" }}
+        className="absolute inset-0 text-red-500/30 select-none pointer-events-none"
+        aria-hidden="true"
+      >
+        {children}
+      </motion.div>
+      {/* Blue Layer */}
+      <motion.div
+        initial={{ opacity: 0, x: 10, filter: 'blur(10px)' }}
+        animate={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 1.5, delay: delay + 0.2, ease: "easeOut" }}
+        className="absolute inset-0 text-blue-500/30 select-none pointer-events-none"
+        aria-hidden="true"
+      >
+        {children}
+      </motion.div>
+      {/* Main Content */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay, ease: [0.19, 1, 0.22, 1] }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  )
+}
+
 const SectionHeader = React.memo(({ badge, title, desc }: any) => (
   <div className="mb-20 flex flex-col items-center text-center">
-    <div className="flex items-center gap-4 mb-6">
-      <div className="w-10 h-[1px] bg-prism-accent" />
-      <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-prism-accent">{badge}</span>
-      <div className="w-10 h-[1px] bg-prism-accent" />
-    </div>
-    <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-[1.1]">{title}</h2>
-    <p className="max-w-2xl text-gray-600 text-sm md:text-base leading-relaxed">{desc}</p>
+    <BlurReveal>
+      <div className="flex items-center gap-4 mb-6 justify-center">
+        <div className="w-10 h-[1px] bg-prism-accent" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-prism-accent">{badge}</span>
+        <div className="w-10 h-[1px] bg-prism-accent" />
+      </div>
+    </BlurReveal>
+
+    <BlurReveal delay={0.2}>
+      <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-[1.1]">{title}</h2>
+    </BlurReveal>
+
+    <BlurReveal delay={0.4}>
+      <p className="max-w-2xl text-gray-600 text-sm md:text-base leading-relaxed mx-auto">{desc}</p>
+    </BlurReveal>
   </div>
 ))
 
@@ -479,28 +535,36 @@ const App = () => {
           transition={{ duration: 0.5 }}
           className="text-center z-10"
         >
-          <div className="mb-4 md:mb-8 inline-block">
-            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-600">{t.heroBadge}</span>
-          </div>
+          <BlurReveal>
+            <div className="mb-4 md:mb-8 inline-block">
+              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-600">{t.heroBadge}</span>
+            </div>
+          </BlurReveal>
 
-          <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1.15] mb-6 md:mb-10 hero-gradient-text">
-            {t.heroTitle}
-          </h1>
+          <SpectralReveal delay={0.3}>
+            <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1.15] mb-6 md:mb-10 hero-gradient-text">
+              {t.heroTitle}
+            </h1>
+          </SpectralReveal>
 
-          <p className="max-w-2xl mx-auto text-gray-600 text-sm md:text-lg font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
-            {t.heroDesc}
-          </p>
+          <BlurReveal delay={0.6}>
+            <p className="max-w-2xl mx-auto text-gray-600 text-sm md:text-lg font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
+              {t.heroDesc}
+            </p>
+          </BlurReveal>
 
-          <div className="flex justify-center items-center">
-            <a
-              href={CHROME_STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em] flex items-center gap-3 transform active:scale-95 transition-transform"
-            >
-              {t.ctaExperience} <ChevronRight className="w-5 h-5" />
-            </a>
-          </div>
+          <BlurReveal delay={0.9}>
+            <div className="flex justify-center items-center">
+              <a
+                href={CHROME_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em] flex items-center gap-3 transform active:scale-95 transition-transform"
+              >
+                {t.ctaExperience} <ChevronRight className="w-5 h-5" />
+              </a>
+            </div>
+          </BlurReveal>
         </motion.div>
 
 
@@ -515,27 +579,31 @@ const App = () => {
         />
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
-          {t.mainFeatures.map((feat: any) => (
-            <div key={feat.id} className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all" role="article">
-              <div className="w-16 h-16 rounded-full bg-black/5 flex items-center justify-center mb-6 text-prism-accent group-hover:scale-110 transition-transform">
-                {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-8 h-8", "aria-hidden": "true" })}
+          {t.mainFeatures.map((feat: any, idx: number) => (
+            <BlurReveal key={feat.id} delay={idx * 0.1}>
+              <div className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all" role="article">
+                <div className="w-16 h-16 rounded-full bg-black/5 flex items-center justify-center mb-6 text-prism-accent group-hover:scale-110 transition-transform">
+                  {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-8 h-8", "aria-hidden": "true" })}
+                </div>
+                <h3 className="text-sm font-black uppercase tracking-[0.2em]">{feat.title}</h3>
+                <span className="sr-only">Merlin {feat.title} feature</span>
               </div>
-              <h3 className="text-sm font-black uppercase tracking-[0.2em]">{feat.title}</h3>
-              <span className="sr-only">Merlin {feat.title} feature</span>
-            </div>
+            </BlurReveal>
           ))}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32" role="list">
           {t.detailedFeatures.map((feat: any, idx: number) => (
-            <div key={idx} className="glass-card p-6 flex items-center gap-5 group hover:bg-black/5 transition-all" role="listitem">
-              <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-prism-accent group-hover:scale-110 transition-transform flex-shrink-0">
-                {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5", "aria-hidden": "true" })}
+            <BlurReveal key={idx} delay={idx * 0.05}>
+              <div className="glass-card p-6 flex items-center gap-5 group hover:bg-black/5 transition-all" role="listitem">
+                <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-prism-accent group-hover:scale-110 transition-transform flex-shrink-0">
+                  {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5", "aria-hidden": "true" })}
+                </div>
+                <p className="text-gray-600 text-sm font-medium leading-relaxed group-hover:text-black transition-colors text-left transition-all">
+                  {feat.text}
+                </p>
               </div>
-              <p className="text-gray-600 text-sm font-medium leading-relaxed group-hover:text-black transition-colors text-left transition-all">
-                {feat.text}
-              </p>
-            </div>
+            </BlurReveal>
           ))}
         </div>
       </section>
@@ -560,29 +628,35 @@ const App = () => {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group">
-            <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-              <Eye className="w-6 h-6" />
+          <BlurReveal delay={0.1}>
+            <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group h-full">
+              <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
+                <Eye className="w-6 h-6" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">{t.pillar1Title}</h3>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar1Desc}</p>
             </div>
-            <h3 className="text-2xl font-bold mb-4">{t.pillar1Title}</h3>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar1Desc}</p>
-          </div>
+          </BlurReveal>
 
-          <div className="glass-card spectrum-card p-10 border-prism-accent/20 hover:bg-white/60 transition-all group">
-            <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-              <Zap className="w-6 h-6" />
+          <BlurReveal delay={0.2}>
+            <div className="glass-card spectrum-card p-10 border-prism-accent/20 hover:bg-white/60 transition-all group h-full">
+              <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">{t.pillar2Title}</h3>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar2Desc}</p>
             </div>
-            <h3 className="text-2xl font-bold mb-4">{t.pillar2Title}</h3>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar2Desc}</p>
-          </div>
+          </BlurReveal>
 
-          <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group">
-            <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-              <Target className="w-6 h-6" />
+          <BlurReveal delay={0.3}>
+            <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group h-full">
+              <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
+                <Target className="w-6 h-6" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">{t.pillar3Title}</h3>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar3Desc}</p>
             </div>
-            <h3 className="text-2xl font-bold mb-4">{t.pillar3Title}</h3>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar3Desc}</p>
-          </div>
+          </BlurReveal>
         </div>
       </section>
 
