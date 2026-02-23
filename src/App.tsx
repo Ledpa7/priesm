@@ -349,13 +349,13 @@ const Navbar = React.memo(({ lang, setLang }: {
 
   return (
     <nav className="fixed top-0 w-full z-[100] px-8 py-3 flex justify-between items-center backdrop-blur-xl border-b border-white/20 bg-white/[0.02] rounded-b-[40px] shadow-2xl shadow-black/10">
-      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center">
-          <Sparkles className="w-5 h-5 text-white" />
+      <div className="flex items-center gap-4">
+        <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center flex-shrink-0 shadow-lg shadow-black/10">
+          <Sparkles className="w-6 h-6 text-white" />
         </div>
-        <div className="flex flex-col">
-          <span className="text-xl font-black tracking-tighter leading-none rainbow-text text-[22px]">Merlin</span>
-          <span className="text-[7px] font-bold tracking-[0.4em] uppercase text-black/40 ml-0.5">AI Lab</span>
+        <div className="flex flex-col justify-center translate-y-[2px] -space-y-1">
+          <span className="text-[22px] font-black tracking-tighter rainbow-text leading-none">Merlin</span>
+          <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-black/40 ml-0.5">AI Lab</span>
         </div>
       </div>
 
