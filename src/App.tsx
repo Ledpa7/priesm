@@ -394,12 +394,13 @@ const Navbar = React.memo(({ lang, setLang }: {
   )
 })
 // 💎 REFRACTIVE BLUR REVEAL - Focusing intellectual clarity
-const BlurReveal = ({ children, delay = 0 }: any) => (
+const BlurReveal = ({ children, delay = 0, className = "" }: any) => (
   <motion.div
     initial={{ opacity: 0, filter: 'blur(15px)', y: 20 }}
     whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
     transition={{ duration: 1.2, delay, ease: [0.19, 1, 0.22, 1] }}
     viewport={{ once: true }}
+    className={className}
   >
     {children}
   </motion.div>
@@ -580,8 +581,8 @@ const App = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
           {t.mainFeatures.map((feat: any, idx: number) => (
-            <BlurReveal key={feat.id} delay={idx * 0.1}>
-              <div className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all" role="article">
+            <BlurReveal key={feat.id} delay={idx * 0.1} className="h-full">
+              <div className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all h-full" role="article">
                 <div className="w-16 h-16 rounded-full bg-black/5 flex items-center justify-center mb-6 text-prism-accent group-hover:scale-110 transition-transform">
                   {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-8 h-8", "aria-hidden": "true" })}
                 </div>
