@@ -444,8 +444,8 @@ const SpectralReveal = ({ children, delay = 0 }: any) => {
   )
 }
 
-const SectionHeader = React.memo(({ badge, title, desc }: any) => (
-  <div className="mb-20 flex flex-col items-center text-center">
+const SectionHeader = React.memo(({ badge, title, desc, className = "mb-20" }: any) => (
+  <div className={`${className} flex flex-col items-center text-center`}>
     <BlurReveal>
       <div className="flex items-center gap-4 mb-6 justify-center">
         <div className="w-10 h-[1px] bg-black/10" />
@@ -502,13 +502,37 @@ const Hero = React.memo(({ t }: { t: any }) => (
   </section>
 ))
 
+const VideoDemo = React.memo(({ src }: { src: string }) => (
+  <BlurReveal delay={0.6}>
+    <div className="relative max-w-3xl mx-auto mb-20 group">
+      <div className="absolute -inset-1 bg-gradient-to-r from-prism-accent/40 to-purple-500/40 rounded-2xl blur-2xl opacity-50 group-hover:opacity-90 transition duration-1000 group-hover:duration-200"></div>
+      <div className="relative !rounded-2xl overflow-hidden border-[4px] border-white/20 backdrop-blur-2xl shadow-[0_25px_45px_-15px_rgba(0,0,0,0.6)] transform-gpu will-change-transform">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-auto scale-[1.01]"
+        >
+          <source src={src} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+      </div>
+    </div>
+  </BlurReveal>
+))
+
 const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
   <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
     <SectionHeader
       badge={t.flagshipBadge}
       title={t.flagshipTitle}
       desc={t.flagshipDesc}
+      className="mb-10"
     />
+
+    <VideoDemo src="/video/meriln_5.mp4" />
 
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
       {t.mainFeatures.map((feat: any, idx: number) => (
@@ -645,6 +669,27 @@ const App = () => {
   const cursorRef = useRef<HTMLDivElement>(null)
   const [lang, setLang] = useState<keyof typeof translations>('en')
   const [isHovering, setIsHovering] = useState(false)
+
+  // GEO SEO: Detect language from URL param or Browser language
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const urlLang = params.get('lang') as any
+
+    if (urlLang && translations[urlLang as keyof typeof translations]) {
+      setLang(urlLang)
+    } else {
+      const browserLang = navigator.language.split('-')[0] as any
+      if (translations[browserLang as keyof typeof translations]) {
+        setLang(browserLang)
+      }
+    }
+  }, [])
+
+  // Update HTML lang attribute
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
+
   const t = translations[lang]
 
   const handleMouseMove = (e: React.MouseEvent) => {
