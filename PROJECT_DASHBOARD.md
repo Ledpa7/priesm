@@ -27,6 +27,7 @@ This dashboard tracks the current status, design decisions, and technical specif
 - **Typography:** Inter (Standard) with `rainbow-text` gradients. Optimized leading (`1.15`).
 - **Video Presentation:** **Frosted Glass Frame**
   - **Effect:** Deep backdrop blur (backdrop-blur-2xl) with 4px white/20 border.
+  - **Alignment:** Grid-synchronized to span exactly 3/5 columns, matching the feature cards below perfectly.
   - **Optimization:** transform-gpu and memoized component structure.
 
 ## 🛠 Feature Checklist

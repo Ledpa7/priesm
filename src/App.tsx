@@ -502,9 +502,9 @@ const Hero = React.memo(({ t }: { t: any }) => (
   </section>
 ))
 
-const VideoDemo = React.memo(({ src }: { src: string }) => (
-  <BlurReveal delay={0.6}>
-    <div className="relative max-w-3xl mx-auto mb-20 group">
+const VideoDemo = React.memo(({ src, className = "" }: { src: string, className?: string }) => (
+  <BlurReveal delay={0.6} className={className}>
+    <div className="relative group">
       <div className="absolute -inset-1 bg-gradient-to-r from-prism-accent/40 to-purple-500/40 rounded-2xl blur-2xl opacity-50 group-hover:opacity-90 transition duration-1000 group-hover:duration-200"></div>
       <div className="relative !rounded-2xl overflow-hidden border-[4px] border-white/20 backdrop-blur-2xl shadow-[0_25px_45px_-15px_rgba(0,0,0,0.6)] transform-gpu will-change-transform">
         <video
@@ -532,7 +532,11 @@ const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
       className="mb-10"
     />
 
-    <VideoDemo src="/video/meriln_5.mp4" />
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-20">
+      <div className="md:col-start-2 md:col-span-3 px-4 md:px-0">
+        <VideoDemo src="/video/meriln_5.mp4" />
+      </div>
+    </div>
 
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
       {t.mainFeatures.map((feat: any, idx: number) => (
