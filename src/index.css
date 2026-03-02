@@ -68,16 +68,14 @@ button {
   cursor: none !important;
 }
 
-/* Noise overlay for premium texture */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.02;
-  pointer-events: none;
-  z-index: 100;
-}
+
+
+
+
+/* Ensure links and buttons still show pointer if needed, or we handle it via cursor state */
+
+
+
 
 /* Option D: Crystal Refraction - Automatic Breathing Overlay */
 .mesh-bg {
@@ -87,22 +85,29 @@ body::before {
   z-index: -10;
   overflow: hidden;
   pointer-events: none;
-  /* Re-integrated breathing effect on opacity to avoid transform conflicts */
-  animation: prism-breathing 5s ease-in-out infinite alternate;
+  animation: prism-breathing 8s ease-in-out infinite alternate;
   transform: scale(1.1);
 }
 
 @keyframes prism-breathing {
   0% {
-    opacity: 0.5;
-    filter: blur(10px);
+    opacity: 0.6;
+    filter: blur(8px);
   }
 
   100% {
     opacity: 1;
-    filter: blur(5px);
+    filter: blur(0px);
   }
 }
+
+.mesh-bg {
+  contain: paint;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+
 
 .mesh-overlay {
   position: fixed;
@@ -124,97 +129,7 @@ body::before {
 
 
 
-.mesh-bg::before {
-  content: "";
-  position: absolute;
-  top: -100vh;
-  left: -100vw;
-  width: 300vw;
-  height: 300vh;
-  /* Ensure rotation is centered on screen */
-  transform-origin: center center;
-  /* Full Prismatic Spectrum - Restored all 7 colors */
-  background: linear-gradient(45deg,
-      rgba(239, 68, 68, 0.5) 0%,
-      rgba(249, 115, 22, 0.4) 15%,
-      rgba(234, 179, 8, 0.4) 30%,
-      rgba(34, 197, 94, 0.4) 45%,
-      rgba(59, 130, 246, 0.4) 60%,
-      rgba(99, 102, 241, 0.5) 75%,
-      rgba(168, 85, 247, 0.4) 90%,
-      rgba(239, 68, 68, 0.5) 100%);
-  background-size: 200% 200%;
-  filter: blur(10px);
-  opacity: 1;
-}
 
-.mesh-bg::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200vw;
-  height: 200vh;
-  /* Distinct Refraction Lines */
-  background: repeating-linear-gradient(-45deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.1) 2%,
-      transparent 4%);
-  background-size: 100% 100%;
-  mask-image: radial-gradient(circle at center, white 0%, transparent 80%);
-  -webkit-mask-image: radial-gradient(circle at center, white 0%, transparent 80%);
-  animation: lines-flow 5s linear infinite;
-  opacity: 0.5;
-}
-
-@keyframes bg-surge {
-  0% {
-    background-position: 0% 0%;
-    transform: rotate(0deg) scale(1);
-  }
-
-  50% {
-    background-position: 100% 100%;
-    transform: rotate(15deg) scale(1.15);
-  }
-
-  100% {
-    background-position: 50% 0%;
-    transform: rotate(-10deg) scale(1.05);
-  }
-}
-
-@keyframes lines-flow {
-  from {
-    transform: rotate(0deg) translate(0, 0);
-  }
-
-  to {
-    transform: rotate(360deg) translate(20px, 20px);
-  }
-}
-
-@keyframes crystal-rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes crystal-shimmer {
-  0% {
-    opacity: 0.8;
-    transform: scale(1);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-}
 
 @layer components {
   .glass-card {
@@ -348,21 +263,9 @@ body::before {
   color: transparent;
 }
 
-.prism-refraction-line {
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
-  filter: blur(1px);
-}
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
 
-  100% {
-    background-position: 200% 50%;
-  }
-}
+
 
 .hero-glow {
   position: absolute;

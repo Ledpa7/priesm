@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Globe,
@@ -7,8 +7,8 @@ import {
   Instagram,
   Layers,
   Sparkles,
-  Languages,
   Zap,
+  Languages,
   Scale,
   Terminal,
   PlusSquare,
@@ -26,7 +26,7 @@ const CHROME_STORE_URL = "https://chromewebstore.google.com/detail/merlin-multi-
 
 const translations = {
   en: {
-    nav: ['Philosophy', 'Features', 'Spectrum'],
+
     meet: 'Meet Merlin',
     heroBadge: 'The Multi-AI Orchestrator',
     heroTitle: <>One Prompt,<br /><span className="rainbow-text">Multi-AI Comparison.</span></>,
@@ -35,9 +35,9 @@ const translations = {
     ctaExplore: 'View Roadmap',
     question: 'One Prompt',
     perspective: 'Multi-AI Response',
-    flagshipBadge: 'Multi-AI Engine',
-    flagshipTitle: 'Merlin Multi-AI Interface',
-    flagshipDesc: 'Experience true Multi-AI efficiency. Trigger simultaneous responses from multiple AIs with one question to find the ultimate insight without repetitive typing.',
+    flagshipBadge: 'Multi-AI Core Engine',
+    flagshipTitle: 'Merlin Multi-AI',
+    flagshipDesc: <>True speed comes from comparing multiple AIs.<br />Compare responses from multiple AIs simultaneously with a single prompt to find the best insights.</>,
     mainFeatures: [
       { id: 'f1', title: 'Split Screen', icon: 'Layers' },
       { id: 'f2', title: 'Simultaneous Answers', icon: 'Zap' },
@@ -77,7 +77,7 @@ const translations = {
     footerLinks: ['Philosophy', 'Manifesto']
   },
   ko: {
-    nav: ['철학', '핵심 기능', '스펙트럼'],
+
     meet: 'Merlin 설치하기',
     heroBadge: 'Multi-AI Orchestrator',
     heroTitle: <>질문은 한번,<br /><span className="rainbow-text">Multi-AI<br className="md:hidden" /> 동시 비교</span></>,
@@ -88,7 +88,7 @@ const translations = {
     perspective: '멀티AI 답변',
     flagshipBadge: '멀티AI 핵심 엔진',
     flagshipTitle: 'Merlin Multi-AI',
-    flagshipDesc: '진정한 속도는 멀티AI 병렬 처리에서 나옵니다. 하나의 프롬프트로 여러 AI의 응답을 동시에 이끌어내어 최적의 인사이트를 즉시 비교하세요.',
+    flagshipDesc: <>진정한 속도는 여러 AI를 비교하는데서 나옵니다.<br />하나의 프롬프트로 여러 AI의 응답을 동시에 비교하여 최적의 인사이트를 내세요.</>,
     mainFeatures: [
       { id: 'f1', title: '화면 분할', icon: 'Layers' },
       { id: 'f2', title: '동시 답변', icon: 'Zap' },
@@ -128,7 +128,7 @@ const translations = {
     footerLinks: ['철학', '아티팩트']
   },
   zh: {
-    nav: ['哲学', '核心功能', '光谱'],
+
     meet: '遇见 Merlin',
     heroBadge: 'Multi-AI Orchestrator',
     heroTitle: <>一次提问，<br /><span className="rainbow-text">Multi-AI 同时对比.</span></>,
@@ -137,9 +137,9 @@ const translations = {
     ctaExplore: '查看路线图',
     question: '一个问题',
     perspective: '视角',
-    flagshipBadge: '核心引擎',
-    flagshipTitle: 'Merlin Response',
-    flagshipDesc: '真正的效率源于并行。通过一个问题触发多个大模型的同步响应，无需重复输入即可获得最佳洞察。',
+    flagshipBadge: '多人工智能核心引擎',
+    flagshipTitle: 'Merlin Multi-AI',
+    flagshipDesc: <>真正的速度源于多种 AI 的对比。<br />通过一个提示词同时对比多个 AI 的回答，获取最佳见解。</>,
     mainFeatures: [
       { id: 'f1', title: '屏幕分栏', icon: 'Layers' },
       { id: 'f2', title: '同时响应', icon: 'Zap' },
@@ -185,37 +185,50 @@ const IconMap: any = {
   ShieldCheck, Eye, Target, UserCheck, Maximize, MousePointer2, Monitor, Database, Languages
 }
 
-// 🌈 CIRCULATING RAINBOW ENGINE - High-Performance Prismatic Flow
-const RandomMesh = React.memo(() => {
-  const rainbowGradient = useMemo(() => `
-    radial-gradient(circle at center, rgba(255,255,255,0.65) 0%, transparent 65%),
-    conic-gradient(from 0deg at 50% 50%,
-      rgba(239, 68, 68, 0.5) 0deg,
-      rgba(239, 68, 68, 0.4) 30deg,
-      rgba(249, 115, 22, 0.35) 75deg,
-      rgba(234, 179, 8, 0.35) 120deg,
-      rgba(34, 197, 94, 0.3) 165deg,
-      rgba(59, 130, 246, 0.35) 210deg,
-      rgba(99, 102, 241, 0.45) 260deg,
-      rgba(168, 85, 247, 0.35) 310deg,
-      rgba(239, 68, 68, 0.5) 360deg
-    )
-  `, [])
+// 🌈 BLURRY BLOBS DATA - Defined outside to avoid re-creation
+const BLOBS_DATA = [
+  { color: 'rgba(239, 68, 68, 0.35)', size: '70vw', duration: 25, delay: 0, x: [0, 80, -40, 0], y: [0, 50, 80, 0] },
+  { color: 'rgba(249, 115, 22, 0.3)', size: '60vw', duration: 30, delay: 2, x: [0, -60, 40, 0], y: [0, 80, -50, 0] },
+  { color: 'rgba(234, 179, 8, 0.3)', size: '65vw', duration: 28, delay: 5, x: [0, 40, -80, 0], y: [0, -70, 60, 0] },
+  { color: 'rgba(34, 197, 94, 0.25)', size: '75vw', duration: 35, delay: 1, x: [0, -80, 60, 0], y: [0, 40, 90, 0] },
+  { color: 'rgba(59, 130, 246, 0.3)', size: '65vw', duration: 32, delay: 4, x: [0, 60, -60, 0], y: [0, -40, -80, 0] },
+  { color: 'rgba(99, 102, 241, 0.4)', size: '60vw', duration: 24, delay: 3, x: [0, -20, 40, 0], y: [0, 40, 20, 0] },
+  { color: 'rgba(168, 85, 247, 0.3)', size: '70vw', duration: 38, delay: 6, x: [0, 80, -40, 0], y: [0, -60, 60, 0] },
+  { color: 'rgba(255, 255, 255, 0.5)', size: '50vw', duration: 20, delay: 1, x: [0, -100, 100, 0], y: [0, 100, -100, 0] },
+  { color: 'rgba(255, 255, 255, 0.4)', size: '80vw', duration: 45, delay: 4, x: [0, 100, -100, 0], y: [0, -100, 100, 0] }
+]
 
+// 🌈 BLURRY BLOBS ENGINE - Premium High-Performance Background
+const RandomMesh = React.memo(() => {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -10, contain: 'strict' }}>
       <div className="mesh-bg">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 55, ease: "linear", repeat: Infinity }}
-          className="absolute top-[-150vh] left-[-150vw] w-[400vw] h-[400vh]"
-          style={{
-            background: rainbowGradient,
-            filter: 'blur(105px)',
-            transformOrigin: '50% 50%',
-            willChange: 'transform'
-          }}
-        />
+        {BLOBS_DATA.map((blob, i) => (
+          <motion.div
+            key={i}
+            animate={{
+              x: blob.x.map(v => `${v}vw`),
+              y: blob.y.map(v => `${v}vh`),
+              scale: [1, 1.2, 0.9, 1],
+            }}
+            transition={{
+              duration: blob.duration,
+              delay: blob.delay,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute rounded-full"
+            style={{
+              width: blob.size,
+              height: blob.size,
+              background: `radial-gradient(circle, ${blob.color} 0%, transparent 75%)`,
+              filter: 'blur(80px)',
+              left: '20%',
+              top: '20%',
+              willChange: 'transform'
+            }}
+          />
+        ))}
       </div>
       <div className="mesh-overlay" />
       <div className="mesh-vignette" />
@@ -277,7 +290,7 @@ const PrismaticBurstEngine = () => {
         color: ['#818cf8', '#c084fc', '#f472b6', '#60a5fa', '#ffffff'][Math.floor(Math.random() * 5)],
         delay: Math.random() * 0.05
       }))
-      setBursts(prev => [...prev, ...newShards])
+      setBursts(prev => [...prev.slice(-36), ...newShards])
     }
 
     // Use mousedown for instant response on every click anywhere in the window
@@ -349,15 +362,15 @@ const Navbar = React.memo(({ lang, setLang }: {
 
   return (
     <nav className="fixed top-0 w-full z-[100] px-8 py-3 flex justify-between items-center backdrop-blur-xl border-b border-white/20 bg-white/[0.02] rounded-b-[40px] shadow-2xl shadow-black/10">
-      <div className="flex items-center gap-4">
-        <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center flex-shrink-0 shadow-lg shadow-black/10">
+      <a href="#home" className="flex items-center gap-4 group transition-transform active:scale-95">
+        <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center flex-shrink-0 shadow-lg shadow-black/10 group-hover:scale-110 transition-transform">
           <Sparkles className="w-6 h-6 text-white" />
         </div>
         <div className="flex flex-col justify-center translate-y-[2px] -space-y-1">
           <span className="text-[22px] font-black tracking-tighter rainbow-text leading-none">Merlin</span>
           <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-black/40 ml-0.5">AI Lab</span>
         </div>
-      </div>
+      </a>
 
       <div className="flex items-center gap-4">
         {/* Mobile View: Top Right */}
@@ -366,18 +379,7 @@ const Navbar = React.memo(({ lang, setLang }: {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex gap-8 items-center border-l border-white/10 pl-8 ml-2">
-          {t.nav.map((item, idx) => (
-            <a
-              key={item}
-              href={`#${['philosophy', 'features', 'spectrum'][idx]}`}
-              className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors"
-            >
-              {item}
-            </a>
-          ))}
-
-          {/* Desktop Placement: To the left of Meet Merlin */}
+        <div className="hidden md:flex gap-6 items-center">
           <LanguageSwitcher />
 
           <a
@@ -410,31 +412,31 @@ const BlurReveal = ({ children, delay = 0, className = "" }: any) => (
 const SpectralReveal = ({ children, delay = 0 }: any) => {
   return (
     <div className="relative inline-block">
-      {/* Red Layer */}
       <motion.div
         initial={{ opacity: 0, x: -10, filter: 'blur(10px)' }}
-        animate={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
+        whileInView={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
+        viewport={{ once: true }}
         transition={{ duration: 1.5, delay: delay + 0.1, ease: "easeOut" }}
         className="absolute inset-0 text-red-500/30 select-none pointer-events-none"
         aria-hidden="true"
       >
         {children}
       </motion.div>
-      {/* Blue Layer */}
       <motion.div
         initial={{ opacity: 0, x: 10, filter: 'blur(10px)' }}
-        animate={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
+        whileInView={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
+        viewport={{ once: true }}
         transition={{ duration: 1.5, delay: delay + 0.2, ease: "easeOut" }}
         className="absolute inset-0 text-blue-500/30 select-none pointer-events-none"
         aria-hidden="true"
       >
         {children}
       </motion.div>
-      {/* Main Content */}
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay, ease: [0.19, 1, 0.22, 1] }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay, ease: [0.16, 1, 0.3, 1] }}
       >
         {children}
       </motion.div>
@@ -446,9 +448,9 @@ const SectionHeader = React.memo(({ badge, title, desc }: any) => (
   <div className="mb-20 flex flex-col items-center text-center">
     <BlurReveal>
       <div className="flex items-center gap-4 mb-6 justify-center">
-        <div className="w-10 h-[1px] bg-prism-accent" />
-        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-prism-accent">{badge}</span>
-        <div className="w-10 h-[1px] bg-prism-accent" />
+        <div className="w-10 h-[1px] bg-black/10" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">{badge}</span>
+        <div className="w-10 h-[1px] bg-black/10" />
       </div>
     </BlurReveal>
 
@@ -460,6 +462,180 @@ const SectionHeader = React.memo(({ badge, title, desc }: any) => (
       <p className="max-w-2xl text-gray-600 text-sm md:text-base leading-relaxed mx-auto">{desc}</p>
     </BlurReveal>
   </div>
+))
+
+const Hero = React.memo(({ t }: { t: any }) => (
+  <section id="home" className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-20 md:pt-32 md:pb-32 px-6">
+    <div className="hero-glow" />
+    <div className="text-center z-10">
+      <BlurReveal>
+        <div className="mb-4 md:mb-8 inline-block">
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">{t.heroBadge}</span>
+        </div>
+      </BlurReveal>
+
+      <SpectralReveal delay={0.3}>
+        <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1.15] mb-6 md:mb-10 hero-gradient-text">
+          {t.heroTitle}
+        </h1>
+      </SpectralReveal>
+
+      <BlurReveal delay={0.6}>
+        <p className="max-w-2xl mx-auto text-gray-600 text-sm md:text-lg font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
+          {t.heroDesc}
+        </p>
+      </BlurReveal>
+
+      <BlurReveal delay={0.9}>
+        <div className="flex justify-center items-center">
+          <a
+            href={CHROME_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em] flex items-center gap-3 transform active:scale-95 transition-transform"
+          >
+            {t.ctaExperience} <ChevronRight className="w-5 h-5" />
+          </a>
+        </div>
+      </BlurReveal>
+    </div>
+  </section>
+))
+
+const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
+  <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
+    <SectionHeader
+      badge={t.flagshipBadge}
+      title={t.flagshipTitle}
+      desc={t.flagshipDesc}
+    />
+
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
+      {t.mainFeatures.map((feat: any, idx: number) => (
+        <BlurReveal key={feat.id} delay={idx * 0.1} className="h-full">
+          <div className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all h-full" role="article">
+            <div className="w-16 h-16 rounded-full bg-black/5 flex items-center justify-center mb-6 text-prism-accent group-hover:scale-110 transition-transform">
+              {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-8 h-8", "aria-hidden": "true" })}
+            </div>
+            <h3 className="text-sm font-black uppercase tracking-[0.2em]">{feat.title}</h3>
+          </div>
+        </BlurReveal>
+      ))}
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32" role="list">
+      {t.detailedFeatures.map((feat: any, idx: number) => (
+        <BlurReveal key={idx} delay={idx * 0.05}>
+          <div className="glass-card p-6 flex items-center gap-5 group hover:bg-black/5 transition-all" role="listitem">
+            <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-prism-accent group-hover:scale-110 transition-transform flex-shrink-0">
+              {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5", "aria-hidden": "true" })}
+            </div>
+            <p className="text-gray-600 text-sm font-medium leading-relaxed group-hover:text-black transition-all text-left">
+              {feat.text}
+            </p>
+          </div>
+        </BlurReveal>
+      ))}
+    </div>
+  </section>
+))
+
+const Philosophy = React.memo(({ t }: { t: any }) => (
+  <section id="philosophy" className="py-40 my-20 w-full backdrop-blur-3xl bg-white/35 border-y border-white/50 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+    <div className="max-w-4xl mx-auto px-6 text-center">
+      <BlurReveal>
+        <h3 className="text-2xl md:text-4xl font-bold mb-12 leading-tight text-black/80">{t.philosophy}</h3>
+      </BlurReveal>
+      <div className="flex flex-col items-center gap-6">
+        <div className="w-12 h-[1px] bg-black/10" />
+        <span className="text-xs font-bold uppercase tracking-[0.4em] text-gray-500">{t.philosophyBadge}</span>
+      </div>
+    </div>
+  </section>
+))
+
+const Spectrum = React.memo(({ t }: { t: any }) => (
+  <section id="spectrum" className="py-32 px-6 max-w-7xl mx-auto">
+    <SectionHeader
+      badge={t.spectrumBadge}
+      title={t.spectrumTitle}
+      desc={t.spectrumDesc}
+    />
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <BlurReveal delay={0.1}>
+        <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group h-full">
+          <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
+            <Eye className="w-6 h-6" />
+          </div>
+          <h3 className="text-2xl font-bold mb-4">{t.pillar1Title}</h3>
+          <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar1Desc}</p>
+        </div>
+      </BlurReveal>
+
+      <BlurReveal delay={0.2}>
+        <div className="glass-card spectrum-card p-10 border-prism-accent/20 hover:bg-white/60 transition-all group h-full">
+          <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
+            <Zap className="w-6 h-6" />
+          </div>
+          <h3 className="text-2xl font-bold mb-4">{t.pillar2Title}</h3>
+          <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar2Desc}</p>
+        </div>
+      </BlurReveal>
+
+      <BlurReveal delay={0.3}>
+        <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group h-full">
+          <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
+            <Target className="w-6 h-6" />
+          </div>
+          <h3 className="text-2xl font-bold mb-4">{t.pillar3Title}</h3>
+          <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar3Desc}</p>
+        </div>
+      </BlurReveal>
+    </div>
+  </section>
+))
+
+const Footer = React.memo(({ t }: { t: any }) => (
+  <footer className="py-32 px-6 border-t border-black/5">
+    <div className="max-w-4xl mx-auto text-center">
+      <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-12 hero-gradient-text px-4">
+        {t.footerTitle}
+      </h2>
+      <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+        <a
+          href={CHROME_STORE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em]"
+        >
+          {t.footerCTA}
+        </a>
+        <div className="text-left font-mono text-[9px] uppercase tracking-widest text-gray-600">
+          <div className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-green-500" /> {t.footerMeta1}</div>
+          <div className="flex items-center gap-2 mt-1"><div className="w-1 h-1 rounded-full bg-black/20" /> {t.footerMeta2}</div>
+        </div>
+      </div>
+    </div>
+
+    <div className="mt-32 pt-10 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[0.3em] text-gray-700">
+      <div className="flex items-center gap-6">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+          <Github className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
+        </a>
+        <a href="https://www.instagram.com/priesm_ai/" target="_blank" rel="noopener noreferrer">
+          <Instagram className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
+        </a>
+        <Globe className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
+      </div>
+      <span>{t.footerCopyright}</span>
+      <div className="flex gap-8">
+        {t.footerLinks.map((link: string) => (
+          <span key={link} className="cursor-pointer hover:text-black">{link}</span>
+        ))}
+      </div>
+    </div>
+  </footer>
 ))
 
 
@@ -474,15 +650,14 @@ const App = () => {
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cursorRef.current || !containerRef.current) return
     const { clientX, clientY } = e
-    const { innerWidth, innerHeight } = window
 
     // OPTIMIZATION: Direct DOM manipulation for cursor movement (60fps)
     cursorRef.current.style.left = `${clientX}px`
     cursorRef.current.style.top = `${clientY}px`
 
     // Normalize coordinates for CSS variables
-    const x = (clientX / innerWidth) * 2 - 1
-    const y = (clientY / innerHeight) * 2 - 1
+    const x = (clientX / window.innerWidth) * 2 - 1
+    const y = (clientY / window.innerHeight) * 2 - 1
 
     containerRef.current.style.setProperty('--mouse-x', x.toString())
     containerRef.current.style.setProperty('--mouse-y', y.toString())
@@ -507,18 +682,14 @@ const App = () => {
       <RandomMesh />
       <PrismaticBurstEngine />
 
-      {/* Prism Cursor - Ref Driven Animation */}
       <div
         ref={cursorRef}
         className="prism-cursor pointer-events-none fixed opacity-0 transition-opacity duration-300"
         style={{ zIndex: 10000 }}
       />
 
-      {/* 🔮 GLOBAL EFFECT ENGINE - Topmost Layer Trigger */}
-
       <Navbar lang={lang} setLang={setLang} />
 
-      {/* Hidden SVG Filter for Refraction */}
       <svg className="hidden">
         <filter id="prism-refraction">
           <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
@@ -526,184 +697,17 @@ const App = () => {
         </filter>
       </svg>
 
-      {/* Hero Section */}
-      <section id="philosophy" className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-20 md:pt-32 md:pb-32 px-6">
-        <div className="hero-glow" />
-        <motion.div
-          key={lang}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center z-10"
-        >
-          <BlurReveal>
-            <div className="mb-4 md:mb-8 inline-block">
-              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-600">{t.heroBadge}</span>
-            </div>
-          </BlurReveal>
 
-          <SpectralReveal delay={0.3}>
-            <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1.15] mb-6 md:mb-10 hero-gradient-text">
-              {t.heroTitle}
-            </h1>
-          </SpectralReveal>
 
-          <BlurReveal delay={0.6}>
-            <p className="max-w-2xl mx-auto text-gray-600 text-sm md:text-lg font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
-              {t.heroDesc}
-            </p>
-          </BlurReveal>
-
-          <BlurReveal delay={0.9}>
-            <div className="flex justify-center items-center">
-              <a
-                href={CHROME_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em] flex items-center gap-3 transform active:scale-95 transition-transform"
-              >
-                {t.ctaExperience} <ChevronRight className="w-5 h-5" />
-              </a>
-            </div>
-          </BlurReveal>
+      <AnimatePresence mode="wait">
+        <motion.div key={lang} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <Hero t={t} />
+          <FlagshipFeatures t={t} />
+          <Philosophy t={t} />
+          <Spectrum t={t} />
+          <Footer t={t} />
         </motion.div>
-
-
-      </section>
-
-      {/* Main Flagship Section */}
-      <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
-        <SectionHeader
-          badge={t.flagshipBadge}
-          title={t.flagshipTitle}
-          desc={t.flagshipDesc}
-        />
-
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
-          {t.mainFeatures.map((feat: any, idx: number) => (
-            <BlurReveal key={feat.id} delay={idx * 0.1} className="h-full">
-              <div className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all h-full" role="article">
-                <div className="w-16 h-16 rounded-full bg-black/5 flex items-center justify-center mb-6 text-prism-accent group-hover:scale-110 transition-transform">
-                  {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-8 h-8", "aria-hidden": "true" })}
-                </div>
-                <h3 className="text-sm font-black uppercase tracking-[0.2em]">{feat.title}</h3>
-                <span className="sr-only">Merlin {feat.title} feature</span>
-              </div>
-            </BlurReveal>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32" role="list">
-          {t.detailedFeatures.map((feat: any, idx: number) => (
-            <BlurReveal key={idx} delay={idx * 0.05}>
-              <div className="glass-card p-6 flex items-center gap-5 group hover:bg-black/5 transition-all" role="listitem">
-                <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-prism-accent group-hover:scale-110 transition-transform flex-shrink-0">
-                  {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5", "aria-hidden": "true" })}
-                </div>
-                <p className="text-gray-600 text-sm font-medium leading-relaxed group-hover:text-black transition-colors text-left transition-all">
-                  {feat.text}
-                </p>
-              </div>
-            </BlurReveal>
-          ))}
-        </div>
-      </section>
-
-      {/* Philosophy Section */}
-      <section id="philosophy" className="py-32 bg-black/[0.02]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-2xl md:text-4xl font-bold mb-12 leading-tight text-black/80">{t.philosophy}</h3>
-          <div className="flex flex-col items-center gap-6">
-            <div className="w-12 h-[1px] bg-prism-accent" />
-            <span className="text-xs font-bold uppercase tracking-[0.4em] text-gray-600">{t.philosophyBadge}</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Spectrum Section */}
-      <section id="spectrum" className="py-32 px-6 max-w-7xl mx-auto">
-        <SectionHeader
-          badge={t.spectrumBadge}
-          title={t.spectrumTitle}
-          desc={t.spectrumDesc}
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <BlurReveal delay={0.1}>
-            <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group h-full">
-              <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-                <Eye className="w-6 h-6" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">{t.pillar1Title}</h3>
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar1Desc}</p>
-            </div>
-          </BlurReveal>
-
-          <BlurReveal delay={0.2}>
-            <div className="glass-card spectrum-card p-10 border-prism-accent/20 hover:bg-white/60 transition-all group h-full">
-              <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-                <Zap className="w-6 h-6" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">{t.pillar2Title}</h3>
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar2Desc}</p>
-            </div>
-          </BlurReveal>
-
-          <BlurReveal delay={0.3}>
-            <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group h-full">
-              <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-                <Target className="w-6 h-6" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">{t.pillar3Title}</h3>
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar3Desc}</p>
-            </div>
-          </BlurReveal>
-        </div>
-      </section>
-
-
-
-      {/* Footer CTA */}
-      <footer className="py-32 px-6 border-t border-black/5">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-12 hero-gradient-text px-4">
-            {t.footerTitle}
-          </h2>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <a
-              href={CHROME_STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-10 py-4 rounded-full glass-button-primary text-sm font-black uppercase tracking-[0.2em]"
-            >
-              {t.footerCTA}
-            </a>
-            <div className="text-left font-mono text-[9px] uppercase tracking-widest text-gray-600">
-              <div className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-green-500" /> {t.footerMeta1}</div>
-              <div className="flex items-center gap-2 mt-1"><div className="w-1 h-1 rounded-full bg-black/20" /> {t.footerMeta2}</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-32 pt-10 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[0.3em] text-gray-700">
-          <div className="flex items-center gap-6">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              <Github className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
-            </a>
-            <a href="https://www.instagram.com/priesm_ai/" target="_blank" rel="noopener noreferrer">
-              <Instagram className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
-            </a>
-            <Globe className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
-          </div>
-          <span>{t.footerCopyright}</span>
-          <div className="flex gap-8">
-            {t.footerLinks.map(link => (
-              <span key={link} className="cursor-pointer hover:text-black">{link}</span>
-            ))}
-          </div>
-        </div>
-      </footer>
-
+      </AnimatePresence>
     </div>
   )
 }
