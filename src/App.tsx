@@ -665,48 +665,7 @@ const AuroraBackground = React.memo(() => {
   );
 });
 
-const AuroraHero = React.memo(({ t }: { t: any }) => (
-  <div className="relative min-h-screen flex flex-col items-center justify-center p-6 text-center overflow-hidden">
-    <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-      className="z-10"
-    >
-      <BlurReveal>
-        <span className="text-[10px] font-black uppercase tracking-[0.6em] text-white/90 mb-12 inline-block">
-          {t.heroBadge}
-        </span>
-      </BlurReveal>
-      
-      <div className="relative isolate text-center">
-        <h1 className="text-6xl md:text-[94px] font-black tracking-tighter leading-[0.85] mb-12 text-white selection:bg-white/30">
-          <span className="block opacity-90">One Prompt,</span>
-          <span className="block rainbow-text">
-            Multi-AI Comparison.
-          </span>
-        </h1>
-      </div>
 
-      <BlurReveal delay={0.4}>
-        <p className="max-w-3xl mx-auto text-white/70 text-xl font-medium mb-20 leading-relaxed tracking-tight">
-          {t.heroDesc}
-        </p>
-      </BlurReveal>
-
-      <BlurReveal delay={0.6}>
-        <a 
-          href="/" 
-          onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }}
-          className="group relative px-16 py-7 rounded-full bg-white text-black font-black uppercase tracking-[0.25em] text-[11px] hover:scale-105 active:scale-95 shadow-2xl transition-all"
-        >
-          <span className="relative z-10">Back to Home</span>
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-magenta-400 to-yellow-400 opacity-0 group-hover:opacity-20 transition-opacity" />
-        </a>
-      </BlurReveal>
-    </motion.div>
-  </div>
-));
 
 const PageLayout = ({ children, t }: any) => (
   <motion.div
@@ -811,13 +770,9 @@ const Footer = React.memo(({ t }: { t: any }) => (
 
     <div className="mt-32 pt-10 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[0.3em] text-white">
       <div className="flex items-center gap-6 text-white">
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-          <Github className="w-5 h-5 hover:opacity-70 transition-opacity cursor-pointer" />
-        </a>
         <a href="https://www.instagram.com/priesm_ai/" target="_blank" rel="noopener noreferrer">
           <Instagram className="w-5 h-5 hover:opacity-70 transition-opacity cursor-pointer" />
         </a>
-        <Globe className="w-5 h-5 hover:opacity-70 transition-opacity cursor-pointer" />
       </div>
       <span className="text-white">{t.footerCopyright}</span>
       <div className="flex gap-8 text-white">
@@ -945,8 +900,6 @@ const App = () => {
       <AnimatePresence mode="wait">
         {path.includes('/privacy') ? (
           <PageLayout key="privacy" t={t}><PrivacySection /></PageLayout>
-        ) : path.includes('/aurora') ? (
-          <AuroraHero key="aurora" t={t} />
         ) : (
           <PageLayout key="home" t={t}>
             <Hero t={t} />
