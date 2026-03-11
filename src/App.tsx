@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import {
   Globe,
   ChevronRight,
@@ -74,7 +74,9 @@ const translations = {
     footerMeta1: 'v2.7.1 STABLE',
     footerMeta2: 'MULTI-AI ENGINE READY',
     footerCopyright: 'Merlin Strategic Environment // © 2026 Pr!esm',
-    footerLinks: ['Philosophy', 'Manifesto']
+    footerLinks: [
+      { name: 'Privacy Policy', link: '/privacy/' }
+    ]
   },
   ko: {
 
@@ -125,7 +127,9 @@ const translations = {
     footerMeta1: 'v2.7.1 상용 버전',
     footerMeta2: '멀티 AI 지휘소 준비 완료',
     footerCopyright: 'Merlin 전략 환경 // © 2026 Pr!esm',
-    footerLinks: ['철학', '아티팩트']
+    footerLinks: [
+      { name: '개인정보처리방침', link: '/privacy/' }
+    ]
   },
   zh: {
 
@@ -176,7 +180,9 @@ const translations = {
     footerMeta1: 'v2.7.1 正式版',
     footerMeta2: '多 AI 引擎就绪',
     footerCopyright: 'Merlin 战略环境 // © 2026 Pr!esm',
-    footerLinks: ['哲学', '资产']
+    footerLinks: [
+      { name: '隐私政策', link: '/privacy/' }
+    ]
   }
 }
 
@@ -185,59 +191,8 @@ const IconMap: any = {
   ShieldCheck, Eye, Target, UserCheck, Maximize, MousePointer2, Monitor, Database, Languages
 }
 
-// 🌈 BLURRY BLOBS DATA - Defined outside to avoid re-creation
-const BLOBS_DATA = [
-  { color: 'rgba(239, 68, 68, 0.35)', size: '70vw', duration: 25, delay: 0, x: [0, 80, -40, 0], y: [0, 50, 80, 0] },
-  { color: 'rgba(249, 115, 22, 0.3)', size: '60vw', duration: 30, delay: 2, x: [0, -60, 40, 0], y: [0, 80, -50, 0] },
-  { color: 'rgba(234, 179, 8, 0.3)', size: '65vw', duration: 28, delay: 5, x: [0, 40, -80, 0], y: [0, -70, 60, 0] },
-  { color: 'rgba(34, 197, 94, 0.25)', size: '75vw', duration: 35, delay: 1, x: [0, -80, 60, 0], y: [0, 40, 90, 0] },
-  { color: 'rgba(59, 130, 246, 0.3)', size: '65vw', duration: 32, delay: 4, x: [0, 60, -60, 0], y: [0, -40, -80, 0] },
-  { color: 'rgba(99, 102, 241, 0.4)', size: '60vw', duration: 24, delay: 3, x: [0, -20, 40, 0], y: [0, 40, 20, 0] },
-  { color: 'rgba(168, 85, 247, 0.3)', size: '70vw', duration: 38, delay: 6, x: [0, 80, -40, 0], y: [0, -60, 60, 0] },
-  { color: 'rgba(255, 255, 255, 0.5)', size: '50vw', duration: 20, delay: 1, x: [0, -100, 100, 0], y: [0, 100, -100, 0] },
-  { color: 'rgba(255, 255, 255, 0.4)', size: '80vw', duration: 45, delay: 4, x: [0, 100, -100, 0], y: [0, -100, 100, 0] }
-]
-
-// 🌈 BLURRY BLOBS ENGINE - Premium High-Performance Background
-const RandomMesh = React.memo(() => {
-  return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -10, contain: 'strict' }}>
-      <div className="mesh-bg">
-        {BLOBS_DATA.map((blob, i) => (
-          <motion.div
-            key={i}
-            animate={{
-              x: blob.x.map(v => `${v}vw`),
-              y: blob.y.map(v => `${v}vh`),
-              scale: [1, 1.2, 0.9, 1],
-            }}
-            transition={{
-              duration: blob.duration,
-              delay: blob.delay,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute rounded-full"
-            style={{
-              width: blob.size,
-              height: blob.size,
-              background: `radial-gradient(circle, ${blob.color} 0%, transparent 75%)`,
-              filter: 'blur(80px)',
-              left: '20%',
-              top: '20%',
-              willChange: 'transform'
-            }}
-          />
-        ))}
-      </div>
-      <div className="mesh-overlay" />
-      <div className="mesh-vignette" />
-    </div>
-  )
-})
-
-// 💎 OPTIMIZED PRISMATIC SHARD - GPU Accelerated & Visual Polish
-const PrismaticShard = ({ x, y, tx, ty, size, color, delay, onComplete }: any) => {
+// 💎 PRISMATIC SHARD - GPU Accelerated Click Effect
+const PrismaticShard = React.memo(({ x, y, tx, ty, size, color, delay, onComplete }: any) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
@@ -271,10 +226,12 @@ const PrismaticShard = ({ x, y, tx, ty, size, color, delay, onComplete }: any) =
       }}
     />
   )
-}
+})
 
-// 🚀 ROBUST ENGINE: Listens to everything, everywhere.
-const PrismaticBurstEngine = () => {
+const SHARD_COLORS = ['#818cf8', '#c084fc', '#f472b6', '#60a5fa', '#ffffff']
+
+// 🚀 PRISMATIC BURST ENGINE: Global click effect system
+const PrismaticBurstEngine = React.memo(() => {
   const [bursts, setBursts] = useState<any[]>([])
 
   useEffect(() => {
@@ -287,10 +244,10 @@ const PrismaticBurstEngine = () => {
         tx: (Math.random() - 0.5) * 600,
         ty: (Math.random() - 0.5) * 600,
         size: 0.4 + Math.random() * 1.8,
-        color: ['#818cf8', '#c084fc', '#f472b6', '#60a5fa', '#ffffff'][Math.floor(Math.random() * 5)],
+        color: SHARD_COLORS[Math.floor(Math.random() * SHARD_COLORS.length)],
         delay: Math.random() * 0.05
       }))
-      setBursts(prev => [...prev.slice(-36), ...newShards])
+      setBursts((prev: any[]) => [...prev.slice(-36), ...newShards])
     }
 
     // Use mousedown for instant response on every click anywhere in the window
@@ -311,7 +268,7 @@ const PrismaticBurstEngine = () => {
       ))}
     </AnimatePresence>
   )
-}
+})
 
 const Navbar = React.memo(({ lang, setLang }: {
   lang: keyof typeof translations,
@@ -362,13 +319,13 @@ const Navbar = React.memo(({ lang, setLang }: {
 
   return (
     <nav className="fixed top-0 w-full z-[100] px-8 py-3 flex justify-between items-center backdrop-blur-xl border-b border-white/20 bg-white/[0.02] rounded-b-[40px] shadow-2xl shadow-black/10">
-      <a href="#home" className="flex items-center gap-4 group transition-transform active:scale-95">
+      <a href="/" className="flex items-center gap-4 group transition-transform active:scale-95" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }}>
         <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center flex-shrink-0 shadow-lg shadow-black/10 group-hover:scale-110 transition-transform">
           <Sparkles className="w-6 h-6 text-white" />
         </div>
         <div className="flex flex-col justify-center translate-y-[2px] -space-y-1">
           <span className="text-[22px] font-black tracking-tighter rainbow-text leading-none">Merlin</span>
-          <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-black/40 ml-0.5">AI Lab</span>
+          <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-white/50 ml-0.5">AI Lab</span>
         </div>
       </a>
 
@@ -412,30 +369,30 @@ const BlurReveal = ({ children, delay = 0, className = "" }: any) => (
 const SpectralReveal = ({ children, delay = 0 }: any) => {
   return (
     <div className="relative inline-block">
+      {/* Spectral Glow Layer 1 */}
       <motion.div
-        initial={{ opacity: 0, x: -10, filter: 'blur(10px)' }}
-        whileInView={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
-        viewport={{ once: true }}
+        initial={{ opacity: 0, x: -5, filter: 'blur(10px)' }}
+        animate={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
         transition={{ duration: 1.5, delay: delay + 0.1, ease: "easeOut" }}
         className="absolute inset-0 text-red-500/30 select-none pointer-events-none"
         aria-hidden="true"
       >
         {children}
       </motion.div>
+      {/* Spectral Glow Layer 2 */}
       <motion.div
-        initial={{ opacity: 0, x: 10, filter: 'blur(10px)' }}
-        whileInView={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
-        viewport={{ once: true }}
+        initial={{ opacity: 0, x: 5, filter: 'blur(10px)' }}
+        animate={{ opacity: [0, 0.4, 0], x: 0, filter: 'blur(0px)' }}
         transition={{ duration: 1.5, delay: delay + 0.2, ease: "easeOut" }}
         className="absolute inset-0 text-blue-500/30 select-none pointer-events-none"
         aria-hidden="true"
       >
         {children}
       </motion.div>
+      {/* Main Content Layer */}
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, delay, ease: [0.16, 1, 0.3, 1] }}
       >
         {children}
@@ -448,18 +405,18 @@ const SectionHeader = React.memo(({ badge, title, desc, className = "mb-20" }: a
   <div className={`${className} flex flex-col items-center text-center`}>
     <BlurReveal>
       <div className="flex items-center gap-4 mb-6 justify-center">
-        <div className="w-10 h-[1px] bg-black/10" />
-        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">{badge}</span>
-        <div className="w-10 h-[1px] bg-black/10" />
+        <div className="w-10 h-[1px] bg-white/20" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/60">{badge}</span>
+        <div className="w-10 h-[1px] bg-white/20" />
       </div>
     </BlurReveal>
 
     <BlurReveal delay={0.2}>
-      <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-[1.1]">{title}</h2>
+      <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-[1.1] text-white">{title}</h2>
     </BlurReveal>
 
     <BlurReveal delay={0.4}>
-      <p className="max-w-2xl text-gray-600 text-sm md:text-base leading-relaxed mx-auto">{desc}</p>
+      <p className="max-w-2xl text-white/60 text-sm md:text-base leading-relaxed mx-auto">{desc}</p>
     </BlurReveal>
   </div>
 ))
@@ -470,18 +427,19 @@ const Hero = React.memo(({ t }: { t: any }) => (
     <div className="text-center z-10">
       <BlurReveal>
         <div className="mb-4 md:mb-8 inline-block">
-          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">{t.heroBadge}</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/80">{t.heroBadge}</span>
         </div>
       </BlurReveal>
 
       <SpectralReveal delay={0.3}>
-        <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1.15] mb-6 md:mb-10 hero-gradient-text">
-          {t.heroTitle}
+        <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1.1] mb-6 md:mb-10 text-white selection:bg-white/30">
+          <span className="block opacity-90">One Prompt,</span>
+          <span className="block rainbow-text">Multi-AI Comparison.</span>
         </h1>
       </SpectralReveal>
 
       <BlurReveal delay={0.6}>
-        <p className="max-w-2xl mx-auto text-gray-600 text-sm md:text-lg font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
+        <p className="max-w-2xl mx-auto text-white/70 text-sm md:text-lg font-medium mb-10 md:mb-16 leading-relaxed px-4 md:px-0">
           {t.heroDesc}
         </p>
       </BlurReveal>
@@ -532,8 +490,8 @@ const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
       className="mb-10"
     />
 
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-20">
-      <div className="md:col-start-2 md:col-span-3 px-4 md:px-0">
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 md:mb-20">
+      <div className="md:col-start-2 md:col-span-3 md:px-0">
         <VideoDemo src="/video/meriln_5.mp4" />
       </div>
     </div>
@@ -541,11 +499,16 @@ const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
       {t.mainFeatures.map((feat: any, idx: number) => (
         <BlurReveal key={feat.id} delay={idx * 0.1} className="h-full">
-          <div className="glass-card p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all h-full" role="article">
-            <div className="w-16 h-16 rounded-full bg-black/5 flex items-center justify-center mb-6 text-prism-accent group-hover:scale-110 transition-transform">
-              {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-8 h-8", "aria-hidden": "true" })}
+          <div className="glass-card p-4 md:p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all h-full relative" role="article">
+            {/* Simple Numerical Indicator */}
+            <div className="absolute top-4 left-4 text-[10px] md:text-xs font-black text-black/20 group-hover:text-prism-accent/40 transition-colors">
+              0{idx + 1}
             </div>
-            <h3 className="text-sm font-black uppercase tracking-[0.2em]">{feat.title}</h3>
+            
+            <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-black/5 flex items-center justify-center mb-4 md:mb-6 text-prism-accent group-hover:scale-110 transition-transform">
+              {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5 md:w-8 md:h-8", "aria-hidden": "true" })}
+            </div>
+            <h3 className="text-[10px] md:text-sm font-black uppercase tracking-[0.2em]">{feat.title}</h3>
           </div>
         </BlurReveal>
       ))}
@@ -569,14 +532,14 @@ const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
 ))
 
 const Philosophy = React.memo(({ t }: { t: any }) => (
-  <section id="philosophy" className="py-40 my-20 w-full backdrop-blur-3xl bg-white/35 border-y border-white/50 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+  <section id="philosophy" className="py-40 my-20 w-full backdrop-blur-3xl bg-white/[0.05] border-y border-white/10">
     <div className="max-w-4xl mx-auto px-6 text-center">
       <BlurReveal>
-        <h3 className="text-2xl md:text-4xl font-bold mb-12 leading-tight text-black/80">{t.philosophy}</h3>
+        <h3 className="text-2xl md:text-4xl font-bold mb-12 leading-tight text-white/90">{t.philosophy}</h3>
       </BlurReveal>
       <div className="flex flex-col items-center gap-6">
-        <div className="w-12 h-[1px] bg-black/10" />
-        <span className="text-xs font-bold uppercase tracking-[0.4em] text-gray-500">{t.philosophyBadge}</span>
+        <div className="w-12 h-[1px] bg-white/20" />
+        <span className="text-xs font-bold uppercase tracking-[0.4em] text-white/60">{t.philosophyBadge}</span>
       </div>
     </div>
   </section>
@@ -624,10 +587,210 @@ const Spectrum = React.memo(({ t }: { t: any }) => (
   </section>
 ))
 
+const AURORA_BLOBS = [
+  { color: '#ff0080', w: '90vw', h: '90vh', d: 35, x: [0, 40, -20, -30, 0], y: [0, 20, 30, -10, 0], r: 360, b: 'overlay' as const },
+  { color: '#00e1ff', w: '100vw', h: '100vh', d: 45, x: [0, -40, 20, 40, 0], y: [0, -20, -30, 10, 0], r: -360, b: 'multiply' as const },
+  { color: '#ffea00', w: '85vw', h: '85vh', d: 40, x: [0, 25, -30, 10, 0], y: [0, 30, -20, 40, 0], r: 180, b: 'difference' as const },
+  { color: '#7a00ff', w: '110vw', h: '110vh', d: 55, x: [0, -25, 35, -40, 0], y: [0, -30, 25, -20, 0], r: -180, b: 'multiply' as const },
+  { color: '#00ff40', w: '90vw', h: '90vh', d: 30, x: [0, 40, -10, -30, 0], y: [0, -15, 40, 10, 0], r: 540, b: 'overlay' as const },
+  { color: '#ff3300', w: '80vw', h: '80vh', d: 25, x: [0, -45, 0, 45, 0], y: [0, 10, -10, 0, 0], r: 0, b: 'difference' as const }, 
+  { color: '#ffffff', w: '50vw', h: '50vh', d: 22, x: [0, 30, -30, 0, 0], y: [0, -30, 30, 0, 0], r: 720, b: 'difference' as const },
+  { color: '#0066ff', w: '70vw', h: '70vh', d: 50, x: [-20, 20, -20], y: [-20, 20, -20], r: 0, b: 'overlay' as const },
+  { color: '#ff00ff', w: '75vw', h: '75vh', d: 40, x: [20, -20, 20], y: [20, -20, 20], r: 0, b: 'screen' as const },
+];
+
+const AuroraBackground = React.memo(() => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    let frameId: number;
+    const handleMouseMove = (e: MouseEvent) => {
+      frameId = requestAnimationFrame(() => {
+        mouseX.set((e.clientX - window.innerWidth / 2) * 0.05);
+        mouseY.set((e.clientY - window.innerHeight / 2) * 0.05);
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(frameId);
+    };
+  }, [mouseX, mouseY]);
+
+  const springX = useSpring(mouseX, { stiffness: 40, damping: 25 });
+  const springY = useSpring(mouseY, { stiffness: 40, damping: 25 });
+
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none bg-white select-none" style={{ zIndex: -10 }}>
+      {/* Optimized Parallax Layer */}
+      <motion.div 
+        style={{ x: springX, y: springY, scale: 1.15 }}
+        className="absolute inset-0 flex items-center justify-center filter blur-[80px] md:blur-[110px] transform-gpu"
+      >
+        {AURORA_BLOBS.map((b, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              x: b.x[0] + 'vw', 
+              y: b.y[0] + 'vh', 
+              rotate: 0, 
+              scale: 1, 
+              opacity: 0.7 
+            }}
+            animate={{
+              x: b.x.map(v => `${v}vw`),
+              y: b.y.map(v => `${v}vh`),
+              rotate: [0, b.r],
+              scale: [1, 1.25, 1],
+              opacity: [0.7, 0.9, 0.7]
+            }}
+            transition={{ duration: b.d, repeat: Infinity, ease: "linear" }}
+            className="absolute rounded-full"
+            style={{
+              width: b.w,
+              height: b.h,
+              background: b.color,
+              mixBlendMode: b.b,
+              willChange: 'transform, opacity'
+            }}
+          />
+        ))}
+      </motion.div>
+
+      {/* Surface Texture Layer - Optimized */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+    </div>
+  );
+});
+
+const AuroraHero = React.memo(({ t }: { t: any }) => (
+  <div className="relative min-h-screen flex flex-col items-center justify-center p-6 text-center overflow-hidden">
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="z-10"
+    >
+      <BlurReveal>
+        <span className="text-[10px] font-black uppercase tracking-[0.6em] text-white/90 mb-12 inline-block">
+          {t.heroBadge}
+        </span>
+      </BlurReveal>
+      
+      <div className="relative isolate text-center">
+        <h1 className="text-6xl md:text-[94px] font-black tracking-tighter leading-[0.85] mb-12 text-white selection:bg-white/30">
+          <span className="block opacity-90">One Prompt,</span>
+          <span className="block rainbow-text">
+            Multi-AI Comparison.
+          </span>
+        </h1>
+      </div>
+
+      <BlurReveal delay={0.4}>
+        <p className="max-w-3xl mx-auto text-white/70 text-xl font-medium mb-20 leading-relaxed tracking-tight">
+          {t.heroDesc}
+        </p>
+      </BlurReveal>
+
+      <BlurReveal delay={0.6}>
+        <a 
+          href="/" 
+          onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }}
+          className="group relative px-16 py-7 rounded-full bg-white text-black font-black uppercase tracking-[0.25em] text-[11px] hover:scale-105 active:scale-95 shadow-2xl transition-all"
+        >
+          <span className="relative z-10">Back to Home</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-magenta-400 to-yellow-400 opacity-0 group-hover:opacity-20 transition-opacity" />
+        </a>
+      </BlurReveal>
+    </motion.div>
+  </div>
+));
+
+const PageLayout = ({ children, t }: any) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    {children}
+    <Footer t={t} />
+  </motion.div>
+)
+
+const PrivacySection = React.memo(() => (
+  <section className="pt-40 pb-32 px-6 max-w-4xl mx-auto min-h-screen relative z-10">
+    <BlurReveal>
+      <div className="glass-card p-10 md:p-16 border border-black/5 shadow-2xl relative overflow-hidden text-left mb-12">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+        <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-4 text-center">Privacy Policy</h1>
+        <p className="text-gray-500 text-center text-lg mb-2">Priesm: Multi-LLM & AI Macro Chrome Extension</p>
+        <p className="text-gray-400 text-center text-xs mb-12 font-mono uppercase tracking-widest">Last Updated: March 7, 2026</p>
+        <div className="bg-blue-50/50 border border-blue-100 p-6 rounded-2xl mb-12 text-blue-900 text-sm leading-relaxed">
+          <strong className="text-blue-700 block mb-2 font-black uppercase tracking-wider text-[10px]">Google API Services Disclosure:</strong>
+          This extension is designed to comply with the Google API Services User Data Policy, including the Limited Use requirements. We prioritize data minimization and strictly avoid unauthorized data harvesting.
+        </div>
+        <div className="space-y-12">
+          <article>
+            <h2 className="text-xl font-black mb-4 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center text-xs">1</span>
+              Introduction
+            </h2>
+            <p className="text-gray-600 leading-relaxed pl-11">
+              "Priesm: Multi-LLM & AI Macro" values your privacy. This policy explicitly details how we collect, process, store, and share user data. We do not engage in selling user data or unauthorized data collection.
+            </p>
+          </article>
+          <article>
+            <h2 className="text-xl font-black mb-4 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center text-xs">2</span>
+              Detailed Data Collection and Usage
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-6 pl-11">This product collects data solely to provide multi-LLM workspace and AI automation services.</p>
+            <div className="pl-11 overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead><tr className="border-b border-gray-200"><th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[10px]">Category</th><th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[10px]">Purpose</th><th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[10px]">Storage</th></tr></thead>
+                <tbody className="text-gray-600">
+                  <tr className="border-b border-gray-100"><td className="py-4 px-4 font-bold">Google IDs</td><td className="py-4 px-4">Authentication via OAuth 2.0.</td><td className="py-4 px-4">Supabase (Cloud)</td></tr>
+                  <tr className="border-b border-gray-100"><td className="py-4 px-4 font-bold">App Settings</td><td className="py-4 px-4">UI preferences & bot configs.</td><td className="py-4 px-4">Local & Supabase</td></tr>
+                  <tr className="border-b border-gray-100"><td className="py-4 px-4 font-bold">AI Macros</td><td className="py-4 px-4">Automation tasks execution.</td><td className="py-4 px-4">Supabase (Encrypted)</td></tr>
+                  <tr><td className="py-4 px-4 font-bold">Payments</td><td className="py-4 px-4">Pro version validation.</td><td className="py-4 px-4">Lemon Squeezy API</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article>
+            <h2 className="text-xl font-black mb-4 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center text-xs">3</span>
+              Transparency on Permissions
+            </h2>
+            <ul className="space-y-4 pl-11">
+              <li className="flex gap-4"><span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" /><p className="text-gray-600 text-sm"><strong>audioCapture (Microphone):</strong> Used for voice input AI slots. Data is sent directly to AI providers.</p></li>
+              <li className="flex gap-4"><span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0" /><p className="text-gray-600 text-sm"><strong>declarativeNetRequest:</strong> Bypass cross-origin restrictions for AI iframes.</p></li>
+              <li className="flex gap-4"><span className="w-1.5 h-1.5 rounded-full bg-pink-500 mt-2 flex-shrink-0" /><p className="text-gray-600 text-sm"><strong>Host Permissions:</strong> Interact with web pages for Macros.</p></li>
+            </ul>
+          </article>
+          <article className="border-t border-gray-100 pt-12">
+            <h2 className="text-xl font-black mb-6">Contact and Support</h2>
+            <div className="bg-black text-white p-8 rounded-3xl flex flex-col md:flex-row justify-between items-center gap-8">
+              <div className="text-center md:text-left"><p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-1">Developer</p><p className="text-lg font-black">Jung Jidu</p></div>
+              <a href="mailto:wjdwlen@naver.com" className="px-8 py-3 bg-white text-black rounded-full text-sm font-black uppercase tracking-widest hover:scale-105 transition-transform">wjdwlen@naver.com</a>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div className="text-center">
+        <a href="/" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }} className="inline-block px-12 py-4 border border-black/10 rounded-full text-[10px] font-black uppercase tracking-[0.4em] hover:bg-black hover:text-white transition-all shadow-xl">Back to Home</a>
+      </div>
+    </BlurReveal>
+  </section>
+))
+
 const Footer = React.memo(({ t }: { t: any }) => (
   <footer className="py-32 px-6 border-t border-black/5">
     <div className="max-w-4xl mx-auto text-center">
-      <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-12 hero-gradient-text px-4">
+      <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-12 text-white px-4">
         {t.footerTitle}
       </h2>
       <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -639,27 +802,27 @@ const Footer = React.memo(({ t }: { t: any }) => (
         >
           {t.footerCTA}
         </a>
-        <div className="text-left font-mono text-[9px] uppercase tracking-widest text-gray-600">
+        <div className="text-left font-mono text-[9px] uppercase tracking-widest text-white">
           <div className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-green-500" /> {t.footerMeta1}</div>
-          <div className="flex items-center gap-2 mt-1"><div className="w-1 h-1 rounded-full bg-black/20" /> {t.footerMeta2}</div>
+          <div className="flex items-center gap-2 mt-1"><div className="w-1 h-1 rounded-full bg-white/50" /> {t.footerMeta2}</div>
         </div>
       </div>
     </div>
 
-    <div className="mt-32 pt-10 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[0.3em] text-gray-700">
-      <div className="flex items-center gap-6">
+    <div className="mt-32 pt-10 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[0.3em] text-white">
+      <div className="flex items-center gap-6 text-white">
         <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-          <Github className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
+          <Github className="w-5 h-5 hover:opacity-70 transition-opacity cursor-pointer" />
         </a>
         <a href="https://www.instagram.com/priesm_ai/" target="_blank" rel="noopener noreferrer">
-          <Instagram className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
+          <Instagram className="w-5 h-5 hover:opacity-70 transition-opacity cursor-pointer" />
         </a>
-        <Globe className="w-5 h-5 hover:text-black transition-colors cursor-pointer" />
+        <Globe className="w-5 h-5 hover:opacity-70 transition-opacity cursor-pointer" />
       </div>
-      <span>{t.footerCopyright}</span>
-      <div className="flex gap-8">
-        {t.footerLinks.map((link: string) => (
-          <span key={link} className="cursor-pointer hover:text-black">{link}</span>
+      <span className="text-white">{t.footerCopyright}</span>
+      <div className="flex gap-8 text-white">
+        {t.footerLinks.map((item: any) => (
+          <a key={item.name} href={item.link} onClick={(e) => { if (item.link.startsWith('/')) { e.preventDefault(); window.history.pushState({}, '', item.link); window.dispatchEvent(new Event('popstate')); } }} className="hover:opacity-70 transition-opacity uppercase cursor-pointer">{item.name}</a>
         ))}
       </div>
     </div>
@@ -671,36 +834,57 @@ const Footer = React.memo(({ t }: { t: any }) => (
 const App = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const cursorRef = useRef<HTMLDivElement>(null)
-  const [lang, setLang] = useState<keyof typeof translations>('en')
-  const [isHovering, setIsHovering] = useState(false)
-
-  // GEO SEO: Detect language from URL param or Browser language
-  useEffect(() => {
+  const [lang, setLang] = useState<keyof typeof translations>(() => {
+    if (typeof window === 'undefined') return 'en'
     const params = new URLSearchParams(window.location.search)
     const urlLang = params.get('lang') as any
+    if (urlLang && translations[urlLang as keyof typeof translations]) return urlLang
+    const browserLang = navigator.language.split('-')[0] as any
+    if (translations[browserLang as keyof typeof translations]) return browserLang
+    return 'en'
+  })
+  const [isHovering, setIsHovering] = useState(false)
+  const [path, setPath] = useState(window.location.pathname)
 
-    if (urlLang && translations[urlLang as keyof typeof translations]) {
-      setLang(urlLang)
-    } else {
-      const browserLang = navigator.language.split('-')[0] as any
-      if (translations[browserLang as keyof typeof translations]) {
-        setLang(browserLang)
-      }
-    }
+  useEffect(() => {
+    const handlePopState = () => setPath(window.location.pathname)
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
-  // Update HTML lang attribute
+  // SEO: Update HTML lang attribute and document title dynamically
   useEffect(() => {
     document.documentElement.lang = lang
-  }, [lang])
+    const isPrivacy = path.includes('/privacy')
+    const titles: Record<string, string> = {
+      en: isPrivacy ? 'Privacy Policy | Merlin Pr!esm' : 'Merlin | Pr!esm Parallel Intelligence - Multi-AI Orchestrator',
+      ko: isPrivacy ? '개인정보처리방침 | Merlin Pr!esm' : 'Merlin | Pr!esm 병렬 지능 - 멀티AI 지휘소',
+      zh: isPrivacy ? '隐私政策 | Merlin Pr!esm' : 'Merlin | Pr!esm 并行智能 - 多AI指挥中心'
+    }
+    const descs: Record<string, string> = {
+      en: 'Compare ChatGPT, Claude, and Gemini simultaneously. The ultimate Multi-AI parallel intelligence workspace.',
+      ko: '멀티AI(ChatGPT, Claude, Gemini) 답변을 한 화면에서 동시에 비교하고 분석하세요.',
+      zh: '同时对比ChatGPT、Claude和Gemini的回答。终极多AI并行智能工作空间。'
+    }
+    document.title = titles[lang] || titles.en
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) metaDesc.setAttribute('content', descs[lang] || descs.en)
+
+    // GEO: Update canonical URL with language parameter
+    const canonical = document.querySelector('link[rel="canonical"]')
+    if (canonical) {
+      const base = 'https://priesm.ledpa7.com'
+      canonical.setAttribute('href', lang === 'en' ? base : `${base}/?lang=${lang}`)
+    }
+  }, [lang, path])
 
   const t = translations[lang]
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!cursorRef.current || !containerRef.current) return
     const { clientX, clientY } = e
 
-    // OPTIMIZATION: Direct DOM manipulation for cursor movement (60fps)
+    // Direct DOM manipulation for cursor movement (60fps)
     cursorRef.current.style.left = `${clientX}px`
     cursorRef.current.style.top = `${clientY}px`
 
@@ -720,7 +904,7 @@ const App = () => {
     const target = e.target as HTMLElement
     const interactive = !!target.closest('a, button')
     if (interactive !== isHovering) setIsHovering(interactive)
-  }
+  }, [isHovering])
 
   return (
     <div
@@ -728,7 +912,24 @@ const App = () => {
       className="relative select-none text-sm md:text-base overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
-      <RandomMesh />
+      <AuroraBackground />
+      
+
+      {/* 🌬️ REFINED BREATHING ATMOSPHERE - Pulses behind content, above aurora */}
+      <motion.div 
+        initial={{ opacity: 0.15, scale: 1 }}
+        animate={{ 
+          opacity: [0.15, 0.75, 0.15],
+          scale: [1, 1.03, 1]
+        }}
+        transition={{ 
+          duration: 15, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+        className="fixed inset-0 bg-white pointer-events-none z-[-1]"
+      />
+
       <PrismaticBurstEngine />
 
       <div
@@ -739,23 +940,21 @@ const App = () => {
 
       <Navbar lang={lang} setLang={setLang} />
 
-      <svg className="hidden">
-        <filter id="prism-refraction">
-          <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" />
-        </filter>
-      </svg>
-
 
 
       <AnimatePresence mode="wait">
-        <motion.div key={lang} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-          <Hero t={t} />
-          <FlagshipFeatures t={t} />
-          <Philosophy t={t} />
-          <Spectrum t={t} />
-          <Footer t={t} />
-        </motion.div>
+        {path.includes('/privacy') ? (
+          <PageLayout key="privacy" t={t}><PrivacySection /></PageLayout>
+        ) : path.includes('/aurora') ? (
+          <AuroraHero key="aurora" t={t} />
+        ) : (
+          <PageLayout key="home" t={t}>
+            <Hero t={t} />
+            <FlagshipFeatures t={t} />
+            <Philosophy t={t} />
+            <Spectrum t={t} />
+          </PageLayout>
+        )}
       </AnimatePresence>
     </div>
   )

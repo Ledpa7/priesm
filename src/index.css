@@ -62,20 +62,6 @@ body {
   content: none !important;
 }
 
-/* Ensure links and buttons still show pointer if needed, or we handle it via cursor state */
-a,
-button {
-  cursor: none !important;
-}
-
-
-
-
-
-/* Ensure links and buttons still show pointer if needed, or we handle it via cursor state */
-
-
-
 
 /* Option D: Crystal Refraction - Automatic Breathing Overlay */
 .mesh-bg {
@@ -100,35 +86,6 @@ button {
     filter: blur(0px);
   }
 }
-
-.mesh-bg {
-  contain: paint;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-
-
-.mesh-overlay {
-  position: fixed;
-  inset: 0;
-  /* Removed the white-washing sweep, kept only a very subtle highlight */
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-  z-index: -5;
-  pointer-events: none;
-}
-
-.mesh-vignette {
-  position: fixed;
-  inset: 0;
-  /* Stronger vignette to make the colors POP in the center */
-  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.05) 100%);
-  z-index: -5;
-  pointer-events: none;
-}
-
-
-
 
 
 @layer components {
@@ -255,16 +212,6 @@ button {
     background-position: 300% 50%;
   }
 }
-
-.hero-gradient-text {
-  background: linear-gradient(to bottom, #1a1a1a 60%, rgba(26, 26, 26, 0.6));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-
-
 
 
 .hero-glow {
