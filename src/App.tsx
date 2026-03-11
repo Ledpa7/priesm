@@ -1,9 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import {
-  Globe,
   ChevronRight,
-  Github,
   Instagram,
   Layers,
   Sparkles,
