@@ -4,7 +4,6 @@ import {
   ChevronRight,
   Instagram,
   Layers,
-  Sparkles,
   Zap,
   Languages,
   Scale,
@@ -25,7 +24,7 @@ const CHROME_STORE_URL = "https://chromewebstore.google.com/detail/merlin-multi-
 const translations = {
   en: {
 
-    meet: 'Meet Merlin',
+    meet: 'Install Priesm',
     heroBadge: 'The Multi-AI Orchestrator',
     heroTitle: <>One Prompt,<br /><span className="rainbow-text">Multi-AI Comparison.</span></>,
     heroDesc: <>The ultimate Multi-AI parallel intelligence workspace.<br />Wake up Gemini, ChatGPT, and Claude with a single question.<br />Stop tab-switching and compare AI answers in real-time.</>,
@@ -34,7 +33,7 @@ const translations = {
     question: 'One Prompt',
     perspective: 'Multi-AI Response',
     flagshipBadge: 'Multi-AI Core Engine',
-    flagshipTitle: 'Merlin Multi-AI',
+    flagshipTitle: 'Priesm Multi-AI',
     flagshipDesc: <>True speed comes from comparing multiple AIs.<br />Compare responses from multiple AIs simultaneously with a single prompt to find the best insights.</>,
     mainFeatures: [
       { id: 'f1', title: 'Split Screen', icon: 'Layers' },
@@ -57,7 +56,7 @@ const translations = {
       { text: 'Simply drag text to translate any sentence instantly.', icon: 'Languages' }
     ],
     spectrumBadge: 'The Spectrum',
-    spectrumTitle: 'Pr!esm Spectrum',
+    spectrumTitle: 'Priesm Spectrum',
     spectrumDesc: 'One prompt creates an explosion of diverse intelligence. We redefine the boundaries of AI interaction.',
     pillar1Title: 'The Truth in Parallel',
     pillar1Desc: 'A single AI can hallucinate. Three AIs working together uncover the multi-dimensional truth.',
@@ -66,28 +65,28 @@ const translations = {
     pillar3Title: 'Strategic Workspace',
     pillar3Desc: 'Not a toy. A high-stakes workbench designed for architects who value the precision of parallel reasoning.',
     philosophy: '"True productivity is achieved when you compare and find a better answer."',
-    philosophyBadge: 'Merlin Efficiency',
+    philosophyBadge: 'Priesm Efficiency',
     footerTitle: <>Ask Once. Get All.</>,
     footerCTA: 'Install Free Extension',
-    footerMeta1: 'v2.7.1 STABLE',
+    footerMeta1: 'v2.7.2 STABLE',
     footerMeta2: 'MULTI-AI ENGINE READY',
-    footerCopyright: 'Merlin Strategic Environment // © 2026 Pr!esm',
+    footerCopyright: 'Priesm Strategic Environment // © 2026 Priesm',
     footerLinks: [
       { name: 'Privacy Policy', link: '/privacy/' }
     ]
   },
   ko: {
 
-    meet: 'Merlin 설치하기',
-    heroBadge: 'Multi-AI Orchestrator',
-    heroTitle: <>질문은 한번,<br /><span className="rainbow-text">Multi-AI<br className="md:hidden" /> 동시 비교</span></>,
-    heroDesc: <>비교를 위해 탭을 오가던 행동은 이제 끝.<br />Multi-AI 병렬 지능으로 Gemini, ChatGPT, Claude를 동시에 깨우세요.<br />한 화면에서 쏟아지는 답변 중 최고를 고르기만 하면 됩니다.</>,
+    meet: 'Priesm 설치하기',
+    heroBadge: '멀티-AI 지휘소',
+    heroTitle: <>한번의 질문,<br /><span className="rainbow-text">AI들을 동시비교.</span></>,
+    heroDesc: <>비교를 위해 탭을 오가던 행동은 이제 끝.<br />멀티 AI 병렬 지능으로 Gemini, ChatGPT, Claude를 동시에 깨우세요.<br />한 화면에서 쏟아지는 답변 중 최고를 고르기만 하면 됩니다.</>,
     ctaExperience: '무료 Multi-AI 시작하기',
     ctaExplore: '로드맵 확인',
     question: '하나의 질문',
     perspective: '멀티AI 답변',
     flagshipBadge: '멀티AI 핵심 엔진',
-    flagshipTitle: 'Merlin Multi-AI',
+    flagshipTitle: 'Priesm Multi-AI',
     flagshipDesc: <>진정한 속도는 여러 AI를 비교하는데서 나옵니다.<br />하나의 프롬프트로 여러 AI의 응답을 동시에 비교하여 최적의 인사이트를 내세요.</>,
     mainFeatures: [
       { id: 'f1', title: '화면 분할', icon: 'Layers' },
@@ -109,9 +108,9 @@ const translations = {
       { text: '로그인을 하면 모든 슬롯을 기억합니다.', icon: 'Database' },
       { text: '문장을 드래그하여 번역 할 수 있습니다.', icon: 'Languages' }
     ],
-    spectrumBadge: 'The Spectrum',
-    spectrumTitle: 'Pr!esm Spectrum',
-    spectrumDesc: '하나의 질문은 곧 지능의 폭발입니다. 우리는 AI와 상호작용하는 방식의 경계를 재정의합니다.',
+    spectrumBadge: '지능의 프리즘',
+    spectrumTitle: 'Priesm 스펙트럼',
+    spectrumDesc: '한번의 질문은 곧 지능의 폭발입니다. 우리는 AI와 상호작용하는 방식의 경계를 재정의합니다.',
     pillar1Title: '병렬적 진실',
     pillar1Desc: '하나의 AI는 환각을 말할 수 있지만, 셋이 모이면 다차원적인 진실이 명확히 드러납니다.',
     pillar2Title: '제로 스위칭 지휘',
@@ -119,28 +118,28 @@ const translations = {
     pillar3Title: '전략가를 위한 작업대',
     pillar3Desc: '단순한 챗봇이 아닙니다. 병렬 추론의 정밀함을 아는 전략가들을 위해 설계된 고성능 아키텍처입니다.',
     philosophy: <>"진정한 생산성은 비교를 통해<br />더 나은 답을 찾을 때 완성됩니다."</>,
-    philosophyBadge: '멀린 생산성 선언',
+    philosophyBadge: '프리즘 생산성 선언',
     footerTitle: <>한 번만 물어보세요.</>,
     footerCTA: '지금 바로 무료 설치',
-    footerMeta1: 'v2.7.1 상용 버전',
+    footerMeta1: 'v2.7.2 상용 버전',
     footerMeta2: '멀티 AI 지휘소 준비 완료',
-    footerCopyright: 'Merlin 전략 환경 // © 2026 Pr!esm',
+    footerCopyright: 'Priesm 전략 환경 // © 2026 Priesm',
     footerLinks: [
       { name: '개인정보처리방침', link: '/privacy/' }
     ]
   },
   zh: {
 
-    meet: '遇见 Merlin',
-    heroBadge: 'Multi-AI Orchestrator',
-    heroTitle: <>一次提问，<br /><span className="rainbow-text">Multi-AI 同时对比.</span></>,
+    meet: '遇见 Priesm',
+    heroBadge: '多人工智能指挥中心',
+    heroTitle: <>一次提问，<br /><span className="rainbow-text">多 AI 同时对比.</span></>,
     heroDesc: <>告别为了对比而进行的标签页切换。<br />只需一个提问，即可同时唤醒 Gemini, ChatGPT 和 Claude。<br />您只需从海量答案中择优而用。</>,
     ctaExperience: '免费体验',
     ctaExplore: '查看路线图',
     question: '一个问题',
     perspective: '视角',
     flagshipBadge: '多人工智能核心引擎',
-    flagshipTitle: 'Merlin Multi-AI',
+    flagshipTitle: 'Priesm Multi-AI',
     flagshipDesc: <>真正的速度源于多种 AI 的对比。<br />通过一个提示词同时对比多个 AI 的回答，获取最佳见解。</>,
     mainFeatures: [
       { id: 'f1', title: '屏幕分栏', icon: 'Layers' },
@@ -162,8 +161,8 @@ const translations = {
       { text: '登录后自动记忆您的所有插槽配置。', icon: 'Database' },
       { text: '选中文字即可进行即快划词翻译。', icon: 'Languages' }
     ],
-    spectrumBadge: 'The Spectrum',
-    spectrumTitle: 'Pr!esm Spectrum',
+    spectrumBadge: '智能光谱',
+    spectrumTitle: 'Priesm 光谱',
     spectrumDesc: '一个提问引发多元智能的爆发。我们重新定义 AI 交互的边界。',
     pillar1Title: '并行呈现的真相',
     pillar1Desc: '单一 AI 可能会产生幻觉，但三个 AI 同时工作将揭示多维的真相。',
@@ -172,12 +171,12 @@ const translations = {
     pillar3Title: '战略工作台',
     pillar3Desc: '不是玩具。为追求并行推理精确性的架构师设计的专业工作站。',
     philosophy: '"真正的生产力源于通过对比找到更好的答案。"',
-    philosophyBadge: '멀린 效率宣言',
+    philosophyBadge: 'Priesm 效率宣言',
     footerTitle: <>问一次，得全部。</>,
     footerCTA: '部署免费扩展',
-    footerMeta1: 'v2.7.1 正式版',
+    footerMeta1: 'v2.7.2 正式版',
     footerMeta2: '多 AI 引擎就绪',
-    footerCopyright: 'Merlin 战略环境 // © 2026 Pr!esm',
+    footerCopyright: 'Priesm 战略环境 // © 2026 Priesm',
     footerLinks: [
       { name: '隐私政策', link: '/privacy/' }
     ]
@@ -317,13 +316,13 @@ const Navbar = React.memo(({ lang, setLang }: {
 
   return (
     <nav className="fixed top-0 w-full z-[100] px-8 py-3 flex justify-between items-center backdrop-blur-xl border-b border-white/20 bg-white/[0.02] rounded-b-[40px] shadow-2xl shadow-black/10">
-      <a href="/" className="flex items-center gap-4 group transition-transform active:scale-95" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }}>
-        <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center flex-shrink-0 shadow-lg shadow-black/10 group-hover:scale-110 transition-transform">
-          <Sparkles className="w-6 h-6 text-white" />
+      <a href="/" className="flex items-center gap-3 group transition-transform active:scale-95" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }}>
+        <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+          <img src="/image/priesm_logo_v2.svg" alt="Icon" className="w-9 h-9 object-contain" />
         </div>
-        <div className="flex flex-col justify-center translate-y-[2px] -space-y-1">
-          <span className="text-[22px] font-black tracking-tighter rainbow-text leading-none">Merlin</span>
-          <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-white/50 ml-0.5">AI Lab</span>
+        <div className="flex flex-col justify-center -space-y-[2px] translate-y-[3px]">
+          <img src="/image/priesm_1.svg" alt="Priesm" className="h-[22px] object-contain object-left" />
+          <span className="text-[9px] font-medium tracking-[0.44em] uppercase text-white/40 ml-0.5">AI LAB</span>
         </div>
       </a>
 
@@ -431,8 +430,7 @@ const Hero = React.memo(({ t }: { t: any }) => (
 
       <SpectralReveal delay={0.3}>
         <h1 className="text-5xl md:text-[90px] font-black tracking-tighter leading-[1.1] mb-6 md:mb-10 text-white selection:bg-white/30">
-          <span className="block opacity-90">One Prompt,</span>
-          <span className="block rainbow-text">Multi-AI Comparison.</span>
+          {t.heroTitle}
         </h1>
       </SpectralReveal>
 
@@ -684,7 +682,7 @@ const PrivacySection = React.memo(() => (
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
         <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-4 text-center">Privacy Policy</h1>
         <p className="text-gray-500 text-center text-lg mb-2">Priesm: Multi-LLM & AI Macro Chrome Extension</p>
-        <p className="text-gray-400 text-center text-xs mb-12 font-mono uppercase tracking-widest">Last Updated: March 7, 2026</p>
+        <p className="text-gray-400 text-center text-xs mb-12 font-mono uppercase tracking-widest">Last Updated: March 14, 2026</p>
         <div className="bg-blue-50/50 border border-blue-100 p-6 rounded-2xl mb-12 text-blue-900 text-sm leading-relaxed">
           <strong className="text-blue-700 block mb-2 font-black uppercase tracking-wider text-[10px]">Google API Services Disclosure:</strong>
           This extension is designed to comply with the Google API Services User Data Policy, including the Limited Use requirements. We prioritize data minimization and strictly avoid unauthorized data harvesting.
@@ -810,9 +808,9 @@ const App = () => {
     document.documentElement.lang = lang
     const isPrivacy = path.includes('/privacy')
     const titles: Record<string, string> = {
-      en: isPrivacy ? 'Privacy Policy | Merlin Pr!esm' : 'Merlin | Pr!esm Parallel Intelligence - Multi-AI Orchestrator',
-      ko: isPrivacy ? '개인정보처리방침 | Merlin Pr!esm' : 'Merlin | Pr!esm 병렬 지능 - 멀티AI 지휘소',
-      zh: isPrivacy ? '隐私政策 | Merlin Pr!esm' : 'Merlin | Pr!esm 并行智能 - 多AI指挥中心'
+      en: isPrivacy ? 'Privacy Policy | Priesm' : 'Priesm Parallel Intelligence - Multi-AI Orchestrator',
+      ko: isPrivacy ? '개인정보처리방침 | Priesm' : 'Priesm 병렬 지능 - 멀티AI 지휘소',
+      zh: isPrivacy ? '隐私政策 | Priesm' : 'Priesm 并行智能 - 多AI指挥中心'
     }
     const descs: Record<string, string> = {
       en: 'Compare ChatGPT, Claude, and Gemini simultaneously. The ultimate Multi-AI parallel intelligence workspace.',
