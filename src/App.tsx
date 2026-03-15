@@ -230,27 +230,36 @@ const SHARD_COLORS = ['#818cf8', '#c084fc', '#f472b6', '#60a5fa', '#ffffff']
 // 🚀 PRISMATIC BURST ENGINE: Global click effect system
 const PrismaticBurstEngine = React.memo(() => {
   const [bursts, setBursts] = useState<any[]>([])
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
       const id = Math.random().toString(36).substring(2, 11)
-      const newShards = Array.from({ length: 14 }).map((_, i) => ({
+      const shardCount = isMobile ? 6 : 14 // Reduced for mobile performance
+      const newShards = Array.from({ length: shardCount }).map((_, i) => ({
         id: `${id}-${i}`,
         x: e.clientX,
         y: e.clientY,
-        tx: (Math.random() - 0.5) * 600,
-        ty: (Math.random() - 0.5) * 600,
-        size: 0.4 + Math.random() * 1.8,
+        tx: (Math.random() - 0.5) * (isMobile ? 300 : 600),
+        ty: (Math.random() - 0.5) * (isMobile ? 300 : 600),
+        size: 0.4 + Math.random() * (isMobile ? 1.2 : 1.8),
         color: SHARD_COLORS[Math.floor(Math.random() * SHARD_COLORS.length)],
         delay: Math.random() * 0.05
       }))
-      setBursts((prev: any[]) => [...prev.slice(-36), ...newShards])
+      setBursts((prev: any[]) => [...prev.slice(isMobile ? -12 : -36), ...newShards])
     }
 
     // Use mousedown for instant response on every click anywhere in the window
     window.addEventListener('mousedown', handleGlobalClick, { capture: true })
     return () => window.removeEventListener('mousedown', handleGlobalClick, { capture: true })
-  }, [])
+  }, [isMobile])
 
   return (
     <AnimatePresence>
@@ -315,7 +324,7 @@ const Navbar = React.memo(({ lang, setLang }: {
   )
 
   return (
-    <nav className="fixed top-0 w-full z-[100] px-8 py-3 flex justify-between items-center backdrop-blur-xl border-b border-white/20 bg-white/[0.02] rounded-b-[40px] shadow-2xl shadow-black/10">
+    <nav className="fixed top-0 w-full z-[100] px-8 py-3 flex justify-between items-center backdrop-blur-md md:backdrop-blur-xl border-b border-white/20 bg-white/[0.02] rounded-b-[40px] shadow-2xl shadow-black/10">
       <a href="/" className="flex items-center gap-3 group transition-transform active:scale-95" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }}>
         <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
           <img src="/image/priesm_logo_v2.svg" alt="Icon" className="w-9 h-9 object-contain" />
@@ -364,6 +373,27 @@ const BlurReveal = ({ children, delay = 0, className = "" }: any) => (
 
 // 🌈 SPECTRAL MULTI-LAYER REVEAL - Prism color separation effect
 const SpectralReveal = ({ children, delay = 0 }: any) => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  if (isMobile) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay, ease: "easeOut" }}
+      >
+        {children}
+      </motion.div>
+    )
+  }
+
   return (
     <div className="relative inline-block">
       {/* Spectral Glow Layer 1 */}
@@ -456,26 +486,36 @@ const Hero = React.memo(({ t }: { t: any }) => (
   </section>
 ))
 
-const VideoDemo = React.memo(({ src, className = "" }: { src: string, className?: string }) => (
-  <BlurReveal delay={0.6} className={className}>
-    <div className="relative group">
-      <div className="absolute -inset-1 bg-gradient-to-r from-prism-accent/40 to-purple-500/40 rounded-2xl blur-2xl opacity-50 group-hover:opacity-90 transition duration-1000 group-hover:duration-200"></div>
-      <div className="relative !rounded-2xl overflow-hidden border-[4px] border-white/20 backdrop-blur-2xl shadow-[0_25px_45px_-15px_rgba(0,0,0,0.6)] transform-gpu will-change-transform">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-auto scale-[1.01]"
-        >
-          <source src={src} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+const VideoDemo = React.memo(({ src, className = "" }: { src: string, className?: string }) => {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  return (
+    <BlurReveal delay={0.6} className={className}>
+      <div className="relative group">
+        <div className={`absolute -inset-1 bg-gradient-to-r from-prism-accent/40 to-purple-500/40 rounded-2xl ${isMobile ? 'blur-lg' : 'blur-2xl'} opacity-50 group-hover:opacity-90 transition duration-1000 group-hover:duration-200`}></div>
+        <div className="relative !rounded-2xl overflow-hidden border-[4px] border-white/20 backdrop-blur-2xl shadow-[0_25px_45px_-15px_rgba(0,0,0,0.6)] transform-gpu will-change-transform">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-auto scale-[1.01]"
+          >
+            <source src={src} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+        </div>
       </div>
-    </div>
-  </BlurReveal>
-))
+    </BlurReveal>
+  )
+})
 
 const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
   <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
@@ -598,8 +638,18 @@ const AURORA_BLOBS = [
 const AuroraBackground = React.memo(() => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return; // Skip mouse listeners on mobile
+
     let frameId: number;
     const handleMouseMove = (e: MouseEvent) => {
       frameId = requestAnimationFrame(() => {
@@ -612,19 +662,22 @@ const AuroraBackground = React.memo(() => {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(frameId);
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, isMobile]);
 
   const springX = useSpring(mouseX, { stiffness: 40, damping: 25 });
   const springY = useSpring(mouseY, { stiffness: 40, damping: 25 });
+
+  // Use fewer blobs on mobile to boost performance
+  const activeBlobs = isMobile ? AURORA_BLOBS.slice(0, 3) : AURORA_BLOBS;
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none bg-white select-none" style={{ zIndex: -10 }}>
       {/* Optimized Parallax Layer */}
       <motion.div 
-        style={{ x: springX, y: springY, scale: 1.15 }}
-        className="absolute inset-0 flex items-center justify-center filter blur-[80px] md:blur-[110px] transform-gpu"
+        style={{ x: isMobile ? 0 : springX, y: isMobile ? 0 : springY, scale: isMobile ? 1 : 1.15 }}
+        className={`absolute inset-0 flex items-center justify-center filter ${isMobile ? 'blur-[40px]' : 'blur-[80px] md:blur-[110px]'} transform-gpu`}
       >
-        {AURORA_BLOBS.map((b, i) => (
+        {activeBlobs.map((b, i) => (
           <motion.div
             key={i}
             initial={{ 
@@ -641,7 +694,7 @@ const AuroraBackground = React.memo(() => {
               scale: [1, 1.25, 1],
               opacity: [0.7, 0.9, 0.7]
             }}
-            transition={{ duration: b.d, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: isMobile ? b.d * 1.5 : b.d, repeat: Infinity, ease: "linear" }}
             className="absolute rounded-full"
             style={{
               width: b.w,
@@ -656,7 +709,6 @@ const AuroraBackground = React.memo(() => {
 
       {/* Surface Texture Layer - Optimized */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
     </div>
   );
 });
