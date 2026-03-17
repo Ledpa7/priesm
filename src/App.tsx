@@ -728,67 +728,121 @@ const PageLayout = ({ children, t }: any) => (
 )
 
 const PrivacySection = React.memo(() => (
-  <section className="pt-40 pb-32 px-6 max-w-4xl mx-auto min-h-screen relative z-10">
+  <section className="pt-40 pb-32 px-6 max-w-4xl mx-auto min-h-screen relative z-10 text-left">
     <BlurReveal>
-      <div className="glass-card p-10 md:p-16 border border-black/5 shadow-2xl relative overflow-hidden text-left mb-12">
+      <div className="glass-card p-8 md:p-16 border border-black/5 shadow-2xl relative overflow-hidden mb-12">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+        
         <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-4 text-center">Privacy Policy</h1>
-        <p className="text-gray-500 text-center text-lg mb-2">Priesm: Multi-LLM & AI Macro Chrome Extension</p>
-        <p className="text-gray-400 text-center text-xs mb-12 font-mono uppercase tracking-widest">Last Updated: March 14, 2026</p>
-        <div className="bg-blue-50/50 border border-blue-100 p-6 rounded-2xl mb-12 text-blue-900 text-sm leading-relaxed">
-          <strong className="text-blue-700 block mb-2 font-black uppercase tracking-wider text-[10px]">Google API Services Disclosure:</strong>
-          This extension is designed to comply with the Google API Services User Data Policy, including the Limited Use requirements. We prioritize data minimization and strictly avoid unauthorized data harvesting.
+        <p className="text-gray-500 text-center text-lg mb-2">Priesm: Multi-LLM & AI Macro Orchestrator</p>
+        <p className="text-gray-400 text-center text-[10px] mb-12 font-mono uppercase tracking-[0.3em]">Revision: March 17, 2026 // Compliance Update</p>
+
+        {/* 🚨 CRITICAL DISCLOSURE (WEBSTORE COMPLIANCE) */}
+        <div className="bg-blue-50/70 border border-blue-200 p-6 rounded-3xl mb-12 text-blue-950 text-sm leading-relaxed shadow-sm">
+          <strong className="text-blue-700 block mb-2 font-black uppercase tracking-wider text-[11px]">Strict Data Minimization Guarantee:</strong>
+          Priesm acts as a local orchestrator. Your actual AI conversations (prompts and responses) are <strong>NEVER</strong> sent to or stored on Priesm servers. They stay within your browser environment and are transmitted directly to the respective AI providers (OpenAI, Google, Anthropic, etc.) via secure iframes.
         </div>
-        <div className="space-y-12">
+
+        <div className="space-y-16">
           <article>
-            <h2 className="text-xl font-black mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center text-xs">1</span>
-              Introduction
+            <h2 className="text-xl font-black mb-6 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center text-xs shadow-lg">01</span>
+              User Authentication & Profile
             </h2>
-            <p className="text-gray-600 leading-relaxed pl-11">
-              "Priesm: Multi-LLM & AI Macro" values your privacy. This policy explicitly details how we collect, process, store, and share user data. We do not engage in selling user data or unauthorized data collection.
+            <p className="text-gray-600 leading-relaxed mb-6 pl-11">
+              To provide cross-device synchronization and tier-based feature management, we utilize Google OAuth 2.0.
             </p>
+            <div className="pl-11">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-black/5 p-4 rounded-2xl">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-1">Identity Data</span>
+                  <p className="text-xs text-gray-700">Google Email & Full Name for account identification.</p>
+                </div>
+                <div className="bg-black/5 p-4 rounded-2xl">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-1">Visual Data</span>
+                  <p className="text-xs text-gray-700">Google Avatar URL to personalize your side panel.</p>
+                </div>
+              </div>
+            </div>
           </article>
+
           <article>
-            <h2 className="text-xl font-black mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center text-xs">2</span>
-              Detailed Data Collection and Usage
+            <h2 className="text-xl font-black mb-6 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center text-xs shadow-lg">02</span>
+              Cloud Sync & Usage Metrics
             </h2>
-            <p className="text-gray-600 leading-relaxed mb-6 pl-11">This product collects data solely to provide multi-LLM workspace and AI automation services.</p>
+            <p className="text-gray-600 leading-relaxed mb-8 pl-11">
+              We sync technical configurations to ensure a seamless experience across multiple browsers.
+            </p>
             <div className="pl-11 overflow-x-auto">
               <table className="w-full text-sm border-collapse">
-                <thead><tr className="border-b border-gray-200"><th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[10px]">Category</th><th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[10px]">Purpose</th><th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[10px]">Storage</th></tr></thead>
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[9px]">Type</th>
+                    <th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[9px]">Description</th>
+                    <th className="py-3 px-4 text-left font-black text-gray-400 uppercase tracking-widest text-[9px]">Storage</th>
+                  </tr>
+                </thead>
                 <tbody className="text-gray-600">
-                  <tr className="border-b border-gray-100"><td className="py-4 px-4 font-bold">Google IDs</td><td className="py-4 px-4">Authentication via OAuth 2.0.</td><td className="py-4 px-4">Supabase (Cloud)</td></tr>
-                  <tr className="border-b border-gray-100"><td className="py-4 px-4 font-bold">App Settings</td><td className="py-4 px-4">UI preferences & bot configs.</td><td className="py-4 px-4">Local & Supabase</td></tr>
-                  <tr className="border-b border-gray-100"><td className="py-4 px-4 font-bold">AI Macros</td><td className="py-4 px-4">Automation tasks execution.</td><td className="py-4 px-4">Supabase (Encrypted)</td></tr>
-                  <tr><td className="py-4 px-4 font-bold">Payments</td><td className="py-4 px-4">Pro version validation.</td><td className="py-4 px-4">Lemon Squeezy API</td></tr>
+                  <tr className="border-b border-gray-50"><td className="py-4 px-4 font-bold text-gray-900">Bot Configs</td><td className="py-4 px-4">Custom URLs, slot orders, and system prompts.</td><td className="py-4 px-4">Encrypted Supabase</td></tr>
+                  <tr className="border-b border-gray-50"><td className="py-4 px-4 font-bold text-gray-900">AI Macros</td><td className="py-4 px-4">User-defined automation sequences.</td><td className="py-4 px-4">Encrypted Supabase</td></tr>
+                  <tr className="border-b border-gray-50"><td className="py-4 px-4 font-bold text-gray-900">Activity Stats</td><td className="py-4 px-4">Prompt counts & active time (XP/Level metrics).</td><td className="py-4 px-4">Supabase</td></tr>
+                  <tr><td className="py-4 px-4 font-bold text-gray-900">Billing</td><td className="py-4 px-4">Validates Pro status using secure IDs.</td><td className="py-4 px-4">Lemon Squeezy</td></tr>
                 </tbody>
               </table>
             </div>
           </article>
+
           <article>
-            <h2 className="text-xl font-black mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center text-xs">3</span>
-              Transparency on Permissions
+            <h2 className="text-xl font-black mb-6 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center text-xs shadow-lg">03</span>
+              Technical Permission Disclosure
             </h2>
-            <ul className="space-y-4 pl-11">
-              <li className="flex gap-4"><span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" /><p className="text-gray-600 text-sm"><strong>audioCapture (Microphone):</strong> Used for voice input AI slots. Data is sent directly to AI providers.</p></li>
-              <li className="flex gap-4"><span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0" /><p className="text-gray-600 text-sm"><strong>declarativeNetRequest:</strong> Bypass cross-origin restrictions for AI iframes.</p></li>
-              <li className="flex gap-4"><span className="w-1.5 h-1.5 rounded-full bg-pink-500 mt-2 flex-shrink-0" /><p className="text-gray-600 text-sm"><strong>Host Permissions:</strong> Interact with web pages for Macros.</p></li>
-            </ul>
+            <div className="pl-11 space-y-5">
+              <div className="flex gap-4 group">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0 group-hover:scale-150 transition-transform" />
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  <strong>declarativeNetRequest:</strong> Essential for maintaining your login sessions (cookies) within the side panel iframes. It ensures you don't have to log in to ChatGPT or Claude every time you open the extension.
+                </p>
+              </div>
+              <div className="flex gap-4 group">
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0 group-hover:scale-150 transition-transform" />
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  <strong>audioCapture:</strong> Only used if you explicitly trigger voice input features within supported AI slots.
+                </p>
+              </div>
+              <div className="flex gap-4 group">
+                <div className="w-1.5 h-1.5 rounded-full bg-pink-500 mt-2 flex-shrink-0 group-hover:scale-150 transition-transform" />
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  <strong>Host Permissions:</strong> Required for the "Macro" engine to interact with and automate the specific AI domains you choose to orchestrate.
+                </p>
+              </div>
+            </div>
           </article>
+
           <article className="border-t border-gray-100 pt-12">
-            <h2 className="text-xl font-black mb-6">Contact and Support</h2>
-            <div className="bg-black text-white p-8 rounded-3xl flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="text-center md:text-left"><p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-1">Developer</p><p className="text-lg font-black">Jung Jidu</p></div>
-              <a href="mailto:wjdwlen@naver.com" className="px-8 py-3 bg-white text-black rounded-full text-sm font-black uppercase tracking-widest hover:scale-105 transition-transform">wjdwlen@naver.com</a>
+            <h2 className="text-xl font-black mb-8">Contact and Support</h2>
+            <div className="bg-gray-900 text-white p-8 md:p-10 rounded-[40px] flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl">
+              <div className="text-center md:text-left">
+                <p className="text-[10px] uppercase tracking-[0.4em] text-white/40 mb-2">Lead Developer</p>
+                <p className="text-2xl font-black tracking-tight">Jung Jidu</p>
+              </div>
+              <a href="mailto:wjdwlen@naver.com" className="px-10 py-4 bg-white text-black rounded-full text-xs font-black uppercase tracking-widest hover:bg-gray-200 active:scale-95 transition-all">
+                wjdwlen@naver.com
+              </a>
             </div>
           </article>
         </div>
       </div>
+
       <div className="text-center">
-        <a href="/" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }} className="inline-block px-12 py-4 border border-black/10 rounded-full text-[10px] font-black uppercase tracking-[0.4em] hover:bg-black hover:text-white transition-all shadow-xl">Back to Home</a>
+        <a 
+          href="/" 
+          onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); window.dispatchEvent(new Event('popstate')); }} 
+          className="inline-block px-14 py-4 border border-black/10 rounded-full text-[10px] font-black uppercase tracking-[0.4em] hover:bg-black hover:text-white transition-all shadow-xl active:scale-95"
+        >
+          Back to Home
+        </a>
       </div>
     </BlurReveal>
   </section>
