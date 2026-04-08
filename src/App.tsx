@@ -532,7 +532,7 @@ const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
       </div>
     </div>
 
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-24">
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-4 mb-24">
       {t.mainFeatures.map((feat: any, idx: number) => (
         <BlurReveal key={feat.id} delay={idx * 0.1} className="h-full">
           <div className="glass-card p-4 md:p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all h-full relative" role="article">
@@ -550,7 +550,7 @@ const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
       ))}
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32" role="list">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6 mb-32" role="list">
       {t.detailedFeatures.map((feat: any, idx: number) => (
         <BlurReveal key={idx} delay={idx * 0.05}>
           <div className="glass-card p-6 flex items-center gap-5 group hover:bg-black/5 transition-all" role="listitem">
@@ -624,15 +624,11 @@ const Spectrum = React.memo(({ t }: { t: any }) => (
 ))
 
 const AURORA_BLOBS = [
-  { color: '#ff0080', w: '90vw', h: '90vh', d: 35, x: [0, 40, -20, -30, 0], y: [0, 20, 30, -10, 0], r: 360, b: 'overlay' as const },
-  { color: '#00e1ff', w: '100vw', h: '100vh', d: 45, x: [0, -40, 20, 40, 0], y: [0, -20, -30, 10, 0], r: -360, b: 'multiply' as const },
-  { color: '#ffea00', w: '85vw', h: '85vh', d: 40, x: [0, 25, -30, 10, 0], y: [0, 30, -20, 40, 0], r: 180, b: 'difference' as const },
-  { color: '#7a00ff', w: '110vw', h: '110vh', d: 55, x: [0, -25, 35, -40, 0], y: [0, -30, 25, -20, 0], r: -180, b: 'multiply' as const },
-  { color: '#00ff40', w: '90vw', h: '90vh', d: 30, x: [0, 40, -10, -30, 0], y: [0, -15, 40, 10, 0], r: 540, b: 'overlay' as const },
-  { color: '#ff3300', w: '80vw', h: '80vh', d: 25, x: [0, -45, 0, 45, 0], y: [0, 10, -10, 0, 0], r: 0, b: 'difference' as const }, 
-  { color: '#ffffff', w: '50vw', h: '50vh', d: 22, x: [0, 30, -30, 0, 0], y: [0, -30, 30, 0, 0], r: 720, b: 'difference' as const },
-  { color: '#0066ff', w: '70vw', h: '70vh', d: 50, x: [-20, 20, -20], y: [-20, 20, -20], r: 0, b: 'overlay' as const },
-  { color: '#ff00ff', w: '75vw', h: '75vh', d: 40, x: [20, -20, 20], y: [20, -20, 20], r: 0, b: 'screen' as const },
+  { color: '#ff0080', w: '70vw', h: '70vh', d: 35, x: [0, 30, -10, -20, 0], y: [0, 15, 20, -10, 0], r: 360, b: 'overlay' as const },
+  { color: '#00e1ff', w: '80vw', h: '80vh', d: 45, x: [0, -30, 10, 30, 0], y: [0, -15, -20, 10, 0], r: -360, b: 'multiply' as const },
+  { color: '#ffea00', w: '65vw', h: '65vh', d: 40, x: [0, 20, -20, 10, 0], y: [0, 20, -15, 30, 0], r: 180, b: 'difference' as const },
+  { color: '#7a00ff', w: '85vw', h: '85vh', d: 55, x: [0, -20, 25, -30, 0], y: [0, -20, 20, -15, 0], r: -180, b: 'multiply' as const },
+  { color: '#00ff40', w: '70vw', h: '70vh', d: 30, x: [0, 30, -5, -20, 0], y: [0, -10, 30, 5, 0], r: 540, b: 'overlay' as const },
 ];
 
 const AuroraBackground = React.memo(() => {
@@ -664,17 +660,22 @@ const AuroraBackground = React.memo(() => {
     };
   }, [mouseX, mouseY, isMobile]);
 
-  const springX = useSpring(mouseX, { stiffness: 40, damping: 25 });
-  const springY = useSpring(mouseY, { stiffness: 40, damping: 25 });
+  const springX = useSpring(mouseX, { stiffness: 30, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 30, damping: 20 });
 
   // Use fewer blobs on mobile to boost performance
   const activeBlobs = isMobile ? AURORA_BLOBS.slice(0, 3) : AURORA_BLOBS;
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none bg-white select-none" style={{ zIndex: -10 }}>
+    <div className="fixed inset-0 overflow-hidden pointer-events-none bg-white select-none" style={{ zIndex: -10, backfaceVisibility: 'hidden', transform: 'translate3d(0,0,0)' }}>
       {/* Optimized Parallax Layer */}
       <motion.div 
-        style={{ x: isMobile ? 0 : springX, y: isMobile ? 0 : springY, scale: isMobile ? 1 : 1.15 }}
+        style={{ 
+          x: isMobile ? 0 : springX, 
+          y: isMobile ? 0 : springY, 
+          scale: 1,
+          backfaceVisibility: 'hidden'
+        }}
         className={`absolute inset-0 flex items-center justify-center filter ${isMobile ? 'blur-[40px]' : 'blur-[80px] md:blur-[110px]'} transform-gpu`}
       >
         {activeBlobs.map((b, i) => (
@@ -701,7 +702,9 @@ const AuroraBackground = React.memo(() => {
               height: b.h,
               background: b.color,
               mixBlendMode: b.b,
-              willChange: 'transform, opacity'
+              willChange: 'transform, opacity',
+              backfaceVisibility: 'hidden',
+              transform: 'translate3d(0,0,0)'
             }}
           />
         ))}
