@@ -14,9 +14,12 @@ import {
   Target,
   UserCheck,
   Maximize,
-  MousePointer2,
   Monitor,
-  Database
+  Database,
+  Sparkles,
+  Music,
+  Cpu,
+  GraduationCap
 } from 'lucide-react'
 
 const CHROME_STORE_URL = "https://chromewebstore.google.com/detail/merlin-multi-llm-ai-macro/benmdphopdoninfinldapifkhhppalei?authuser=0&hl=en"
@@ -49,21 +52,20 @@ const translations = {
       { text: 'Fixed prompts provide accurate and consistent information.', icon: 'Target' },
       { text: 'Use your own AI accounts and keep all your paid benefits.', icon: 'UserCheck' },
       { text: 'Full access to all features of each AI model without limits.', icon: 'Maximize' },
-      { text: 'Use your configured Multi-AI slots separately whenever needed.', icon: 'MousePointer2' },
       { text: 'Hide the main chat and work exclusively in split-screen mode.', icon: 'Monitor' },
       { text: 'Add any website as a custom slot (subject to compatibility).', icon: 'PlusSquare' },
       { text: 'Log in to instantly recall and sync all your settings.', icon: 'Database' },
-      { text: 'Simply drag text to translate any sentence instantly.', icon: 'Languages' }
     ],
-    spectrumBadge: 'The Spectrum',
+    spectrumBadge: 'Spectrum',
     spectrumTitle: 'Priesm Spectrum',
-    spectrumDesc: 'One prompt creates an explosion of diverse intelligence. We redefine the boundaries of AI interaction.',
-    pillar1Title: 'The Truth in Parallel',
-    pillar1Desc: 'A single AI can hallucinate. Three AIs working together uncover the multi-dimensional truth.',
-    pillar2Title: 'Frictionless Command',
-    pillar2Desc: 'Eliminate the fatigue of tab-switching. Stay in your flow while triggering all elite models at once.',
-    pillar3Title: 'Strategic Workspace',
-    pillar3Desc: 'Not a toy. A high-stakes workbench designed for architects who value the precision of parallel reasoning.',
+    spectrumDesc: 'We leverage AI to build diverse AI services.',
+    spectrumItems: [
+      { id: 's1', category: 'AI Visual Diary', title: 'Doodle Log', desc: 'An AI picture diary service that turns your daily diary entry into custom artwork once a day.', icon: 'Sparkles', logo: '/images/logos/doodlelog_logo.png', link: 'https://doodlelog.ledpa7.com/', hoverBg: 'hover:bg-[#FF8BA7]/20 hover:border-[#FF8BA7]/80 hover:shadow-[0_0_35px_rgba(255,139,167,0.3)]', textColor: 'group-hover:text-[#FF407D]' },
+      { id: 's2', category: 'Quick AI Utility', title: '30sec Microwave', desc: 'A brand experimenting with viral content by turning ideas into media using generative AI.', icon: 'Zap', logo: '/images/logos/mw30_logo.svg', link: 'https://www.instagram.com/microwave.30/', hoverBg: 'hover:bg-[#EE5B34]/20 hover:border-[#EE5B34]/80 hover:shadow-[0_0_35px_rgba(238,91,52,0.3)]', textColor: 'group-hover:text-[#EE5B34]' },
+      { id: 's3', category: 'AI Productivity', title: 'Keysor', desc: 'A PC utility that allows you to control the mouse cursor using only your keyboard.', icon: 'Terminal', logo: '/images/logos/keysor_logo.svg', link: 'https://keysor.ledpa7.com/', hoverBg: 'hover:bg-[#2FFFAD]/20 hover:border-[#2FFFAD]/80 hover:shadow-[0_0_35px_rgba(47,255,173,0.3)]', textColor: 'group-hover:text-[#00B86E]', scale: 0.8 },
+      { id: 's4', category: 'Smart Education', title: 'U-Teacher', desc: 'A service where AI curates learning curriculums on any topic from countless YouTube videos.', icon: 'GraduationCap', logo: '/images/logos/ut_logo.svg', link: 'https://ut.ledpa7.com/', hoverBg: 'hover:bg-[#3B82F6]/20 hover:border-[#3B82F6]/80 hover:shadow-[0_0_35px_rgba(59,130,246,0.3)]', textColor: 'group-hover:text-[#2563EB]' },
+      { id: 's5', category: 'AI Art Gallery', title: 'Vibe Gallery', desc: 'A community gallery for vibe coders to showcase and share their personal projects.', icon: 'Eye', logo: '/images/logos/vibeGallery.svg', link: 'https://vibegallery.ledpa7.com/main', hoverBg: 'hover:bg-[#8B5CF6]/20 hover:border-[#8B5CF6]/80 hover:shadow-[0_0_35px_rgba(139,92,246,0.3)]', textColor: 'group-hover:text-[#9333EA]' }
+    ],
     philosophy: '"True productivity is achieved when you compare and find a better answer."',
     philosophyBadge: 'Priesm Efficiency',
     footerTitle: <>Ask Once. Get All.</>,
@@ -102,21 +104,20 @@ const translations = {
       { text: '고정된 프롬프트로 더 정확한 정보가 제공됩니다.', icon: 'Target' },
       { text: '본인 계정을 사용하므로 구독한 유료 계정 그대로 사용가능합니다.', icon: 'UserCheck' },
       { text: '각 AI 모델의 모든 기능을 그대로 사용할 수 있습니다.', icon: 'Maximize' },
-      { text: '설정한 멀티AI들을 따로 쓸 수 있습니다.', icon: 'MousePointer2' },
       { text: '메인대화창을 가려 창 분할 모드로만 사용할 수 있습니다.', icon: 'Monitor' },
       { text: '커스텀 슬롯을 사용하여 원하는 사이트 추가가 가능합니다. *막히는 사이트 존재', icon: 'PlusSquare' },
       { text: '로그인을 하면 모든 슬롯을 기억합니다.', icon: 'Database' },
-      { text: '문장을 드래그하여 번역 할 수 있습니다.', icon: 'Languages' }
     ],
-    spectrumBadge: '지능의 프리즘',
+    spectrumBadge: '스펙트럼',
     spectrumTitle: 'Priesm 스펙트럼',
-    spectrumDesc: '한번의 질문은 곧 지능의 폭발입니다. 우리는 AI와 상호작용하는 방식의 경계를 재정의합니다.',
-    pillar1Title: '병렬적 진실',
-    pillar1Desc: '하나의 AI는 환각을 말할 수 있지만, 셋이 모이면 다차원적인 진실이 명확히 드러납니다.',
-    pillar2Title: '제로 스위칭 지휘',
-    pillar2Desc: '탭을 오가는 피로를 완전히 제거했습니다. 모든 엘리트 모델을 한발의 사격으로 동시에 깨우세요.',
-    pillar3Title: '전략가를 위한 작업대',
-    pillar3Desc: '단순한 챗봇이 아닙니다. 병렬 추론의 정밀함을 아는 전략가들을 위해 설계된 고성능 아키텍처입니다.',
+    spectrumDesc: '우리는 AI를 활용하여 다양한 AI 서비스를 만듭니다.',
+    spectrumItems: [
+      { id: 's1', category: 'AI Visual Diary', title: 'Doodle Log', desc: 'AI 그림 일기 서비스, 하루 한번 일기를 적으면 그림으로 만들어주는 서비스', icon: 'Sparkles', logo: '/images/logos/doodlelog_logo.png', link: 'https://doodlelog.ledpa7.com/', hoverBg: 'hover:bg-[#FF8BA7]/20 hover:border-[#FF8BA7]/80 hover:shadow-[0_0_35px_rgba(255,139,167,0.3)]', textColor: 'group-hover:text-[#FF407D]' },
+      { id: 's2', category: 'Quick AI Utility', title: '전자렌지30초', desc: '생성형 AI를 활용해 아이디어를 컨텐츠화하여 바이럴을 실험하는 브랜드', icon: 'Zap', logo: '/images/logos/mw30_logo.svg', link: 'https://www.instagram.com/microwave.30/', hoverBg: 'hover:bg-[#EE5B34]/20 hover:border-[#EE5B34]/80 hover:shadow-[0_0_35px_rgba(238,91,52,0.3)]', textColor: 'group-hover:text-[#EE5B34]' },
+      { id: 's3', category: 'AI Productivity', title: 'Keysor', desc: '키보드만을 사용하여 마우스를 컨트롤하는 PC용 유틸리티', icon: 'Terminal', logo: '/images/logos/keysor_logo.svg', link: 'https://keysor.ledpa7.com/', hoverBg: 'hover:bg-[#2FFFAD]/20 hover:border-[#2FFFAD]/80 hover:shadow-[0_0_35px_rgba(47,255,173,0.3)]', textColor: 'group-hover:text-[#00B86E]', scale: 0.8 },
+      { id: 's4', category: 'Smart Education', title: '유선생', desc: '유튜브의 수많은 영상들로 AI가 배우고 싶은 주제로 커리큘럼을 만들어 주는 서비스', icon: 'GraduationCap', logo: '/images/logos/ut_logo.svg', link: 'https://ut.ledpa7.com/', hoverBg: 'hover:bg-[#3B82F6]/20 hover:border-[#3B82F6]/80 hover:shadow-[0_0_35px_rgba(59,130,246,0.3)]', textColor: 'group-hover:text-[#2563EB]' },
+      { id: 's5', category: 'AI Art Gallery', title: 'Vibe Gallery', desc: '바이브 코더들을 위한 갤러리로 자신들의 프로젝트를 소개하는 커뮤니티', icon: 'Eye', logo: '/images/logos/vibeGallery.svg', link: 'https://vibegallery.ledpa7.com/main', hoverBg: 'hover:bg-[#8B5CF6]/20 hover:border-[#8B5CF6]/80 hover:shadow-[0_0_35px_rgba(139,92,246,0.3)]', textColor: 'group-hover:text-[#9333EA]' }
+    ],
     philosophy: <>"진정한 생산성은 비교를 통해<br />더 나은 답을 찾을 때 완성됩니다."</>,
     philosophyBadge: '프리즘 생산성 선언',
     footerTitle: <>한 번만 물어보세요.</>,
@@ -155,21 +156,20 @@ const translations = {
       { text: '通过固定提示词获取更精准、更专业的信息。', icon: 'Target' },
       { text: '使用您现有的 AI 账号，保留所有付费权益。', icon: 'UserCheck' },
       { text: '完美支持各 AI 模型的所有原生强大功能。', icon: 'Maximize' },
-      { text: '可以根据需要单独控制并使用特定的模型。', icon: 'MousePointer2' },
       { text: '可隐藏主对话窗口，专注于分屏对比工作。', icon: 'Monitor' },
       { text: '支持添加各种网站为 AI 插槽（视站点兼容性而定）。', icon: 'PlusSquare' },
       { text: '登录后自动记忆您的所有插槽配置。', icon: 'Database' },
-      { text: '选中文字即可进行即快划词翻译。', icon: 'Languages' }
     ],
-    spectrumBadge: '智能光谱',
+    spectrumBadge: '光谱',
     spectrumTitle: 'Priesm 光谱',
-    spectrumDesc: '一个提问引发多元智能的爆发。我们重新定义 AI 交互的边界。',
-    pillar1Title: '并行呈现的真相',
-    pillar1Desc: '单一 AI 可能会产生幻觉，但三个 AI 同时工作将揭示多维的真相。',
-    pillar2Title: '无切换指挥',
-    pillar2Desc: '彻底消除切换标签页的疲劳。在流程中同时触发所有顶尖模型。',
-    pillar3Title: '战略工作台',
-    pillar3Desc: '不是玩具。为追求并行推理精确性的架构师设计的专业工作站。',
+    spectrumDesc: '我们利用 AI 打造多元化的 AI 服务。',
+    spectrumItems: [
+      { id: 's1', category: 'AI Visual Diary', title: 'Doodle Log', desc: 'AI 绘图日记服务，每天写一次日记即可自动生成精美画作。', icon: 'Sparkles', logo: '/images/logos/doodlelog_logo.png', link: 'https://doodlelog.ledpa7.com/', hoverBg: 'hover:bg-[#FF8BA7]/20 hover:border-[#FF8BA7]/80 hover:shadow-[0_0_35px_rgba(255,139,167,0.3)]', textColor: 'group-hover:text-[#FF407D]' },
+      { id: 's2', category: 'Quick AI Utility', title: '30秒微波炉', desc: '利用生成式 AI 将创意内容化并实验病毒式传播的品牌。', icon: 'Zap', logo: '/images/logos/mw30_logo.svg', link: 'https://www.instagram.com/microwave.30/', hoverBg: 'hover:bg-[#EE5B34]/20 hover:border-[#EE5B34]/80 hover:shadow-[0_0_35px_rgba(238,91,52,0.3)]', textColor: 'group-hover:text-[#EE5B34]' },
+      { id: 's3', category: 'AI Productivity', title: 'Keysor', desc: '仅使用键盘即可精准控制鼠标的光标 PC 实用工具。', icon: 'Terminal', logo: '/images/logos/keysor_logo.svg', link: 'https://keysor.ledpa7.com/', hoverBg: 'hover:bg-[#2FFFAD]/20 hover:border-[#2FFFAD]/80 hover:shadow-[0_0_35px_rgba(47,255,173,0.3)]', textColor: 'group-hover:text-[#00B86E]', scale: 0.8 },
+      { id: 's4', category: 'Smart Education', title: '유선생', desc: 'AI 利用 YouTube 海量视频为您想要学习的主题自动生成课程大纲的服务。', icon: 'GraduationCap', logo: '/images/logos/ut_logo.svg', link: 'https://ut.ledpa7.com/', hoverBg: 'hover:bg-[#3B82F6]/20 hover:border-[#3B82F6]/80 hover:shadow-[0_0_35px_rgba(59,130,246,0.3)]', textColor: 'group-hover:text-[#2563EB]' },
+      { id: 's5', category: 'AI Art Gallery', title: 'Vibe Gallery', desc: '专为 Vibe Coder 打造的画廊与展示个人项目的互动社区。', icon: 'Eye', logo: '/images/logos/vibeGallery.svg', link: 'https://vibegallery.ledpa7.com/main', hoverBg: 'hover:bg-[#8B5CF6]/20 hover:border-[#8B5CF6]/80 hover:shadow-[0_0_35px_rgba(139,92,246,0.3)]', textColor: 'group-hover:text-[#9333EA]' }
+    ],
     philosophy: '"真正的生产力源于通过对比找到更好的答案。"',
     philosophyBadge: 'Priesm 效率宣言',
     footerTitle: <>问一次，得全部。</>,
@@ -185,9 +185,10 @@ const translations = {
 
 const IconMap: any = {
   Layers, Zap, Scale, Terminal, PlusSquare,
-  ShieldCheck, Eye, Target, UserCheck, Maximize, MousePointer2, Monitor, Database, Languages
-}
+  ShieldCheck, Eye, Target, UserCheck, Maximize, Monitor, Database,
+  Sparkles, Music, Cpu, GraduationCap
 
+}
 // 💎 PRISMATIC SHARD - GPU Accelerated Click Effect
 const PrismaticShard = React.memo(({ x, y, tx, ty, size, color, delay, onComplete }: any) => {
   return (
@@ -535,16 +536,16 @@ const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-4 mb-24">
       {t.mainFeatures.map((feat: any, idx: number) => (
         <BlurReveal key={feat.id} delay={idx * 0.1} className="h-full">
-          <div className="glass-card p-4 md:p-8 flex flex-col items-center text-center group hover:bg-black/5 transition-all h-full relative" role="article">
+          <div className="glass-card p-4 md:p-8 flex flex-col items-center text-center group hover:bg-black/80 backdrop-blur-xl hover:border-black/40 shadow-2xl transition-all duration-300 h-full relative overflow-hidden cursor-pointer" role="article">
             {/* Simple Numerical Indicator */}
-            <div className="absolute top-4 left-4 text-[10px] md:text-xs font-black text-black/20 group-hover:text-prism-accent/40 transition-colors">
+            <div className="absolute top-4 left-4 text-[10px] md:text-xs font-black text-black/20 group-hover:text-white/60 transition-colors duration-300">
               0{idx + 1}
             </div>
             
-            <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-black/5 flex items-center justify-center mb-4 md:mb-6 text-prism-accent group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-black/5 group-hover:bg-white/20 flex items-center justify-center mb-4 md:mb-6 text-prism-accent group-hover:text-white group-hover:scale-110 transition-all duration-300">
               {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5 md:w-8 md:h-8", "aria-hidden": "true" })}
             </div>
-            <h3 className="text-[10px] md:text-sm font-black uppercase tracking-[0.2em]">{feat.title}</h3>
+            <h3 className="text-[10px] md:text-sm font-black uppercase tracking-[0.2em] text-gray-900 group-hover:text-white transition-colors duration-300">{feat.title}</h3>
           </div>
         </BlurReveal>
       ))}
@@ -553,11 +554,11 @@ const FlagshipFeatures = React.memo(({ t }: { t: any }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6 mb-32" role="list">
       {t.detailedFeatures.map((feat: any, idx: number) => (
         <BlurReveal key={idx} delay={idx * 0.05}>
-          <div className="glass-card p-6 flex items-center gap-5 group hover:bg-black/5 transition-all" role="listitem">
-            <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-prism-accent group-hover:scale-110 transition-transform flex-shrink-0">
+          <div className="glass-card p-6 flex items-center gap-5 group hover:bg-black/80 backdrop-blur-xl hover:border-black/40 shadow-2xl transition-all duration-300 cursor-pointer" role="listitem">
+            <div className="w-10 h-10 rounded-xl bg-black/5 group-hover:bg-white/20 flex items-center justify-center text-prism-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 flex-shrink-0">
               {IconMap[feat.icon] && React.createElement(IconMap[feat.icon], { className: "w-5 h-5", "aria-hidden": "true" })}
             </div>
-            <p className="text-gray-600 text-sm font-medium leading-relaxed group-hover:text-black transition-all text-left">
+            <p className="text-gray-600 text-sm font-medium leading-relaxed group-hover:text-white transition-colors duration-300 text-left">
               {feat.text}
             </p>
           </div>
@@ -589,36 +590,31 @@ const Spectrum = React.memo(({ t }: { t: any }) => (
       desc={t.spectrumDesc}
     />
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <BlurReveal delay={0.1}>
-        <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group h-full">
-          <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-            <Eye className="w-6 h-6" />
-          </div>
-          <h3 className="text-2xl font-bold mb-4">{t.pillar1Title}</h3>
-          <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar1Desc}</p>
-        </div>
-      </BlurReveal>
-
-      <BlurReveal delay={0.2}>
-        <div className="glass-card spectrum-card p-10 border-prism-accent/20 hover:bg-white/60 transition-all group h-full">
-          <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-            <Zap className="w-6 h-6" />
-          </div>
-          <h3 className="text-2xl font-bold mb-4">{t.pillar2Title}</h3>
-          <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar2Desc}</p>
-        </div>
-      </BlurReveal>
-
-      <BlurReveal delay={0.3}>
-        <div className="glass-card spectrum-card p-10 border-prism-accent/10 hover:bg-white/60 transition-all group h-full">
-          <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center text-prism-accent mb-8 group-hover:scale-110 transition-transform">
-            <Target className="w-6 h-6" />
-          </div>
-          <h3 className="text-2xl font-bold mb-4">{t.pillar3Title}</h3>
-          <p className="text-gray-600 text-sm md:text-base leading-relaxed">{t.pillar3Desc}</p>
-        </div>
-      </BlurReveal>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {(t.spectrumItems || []).map((item: any, idx: number) => (
+        <BlurReveal key={item.id} delay={idx * 0.1} className="h-full">
+          <a href={item.link || '#'} target="_blank" rel="noopener noreferrer" className={`glass-card spectrum-card aspect-square p-6 md:p-7 border-white/10 ${item.hoverBg || 'hover:bg-black/80 hover:border-black/40'} backdrop-blur-xl transition-all duration-300 group flex flex-col justify-between cursor-pointer overflow-hidden block`}>
+            <div>
+              <div className="mb-4 md:mb-5">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-black/5 group-hover:bg-white/20 flex items-center justify-center p-2 transition-all duration-300 flex-shrink-0 overflow-hidden">
+                  {item.logo ? (
+                    <img src={item.logo} alt={item.title} className="w-full h-full object-contain filter drop-shadow-sm group-hover:brightness-125 transition-transform duration-300" style={item.scale ? { transform: `scale(${item.scale})` } : undefined} />
+                  ) : IconMap[item.icon] ? (
+                    React.createElement(IconMap[item.icon], { className: "w-5 h-5 md:w-6 md:h-6 text-prism-accent group-hover:text-white", "aria-hidden": "true" })
+                  ) : null}
+                </div>
+              </div>
+              <h3 className={`text-xl md:text-2xl font-bold mb-2 md:mb-3 text-gray-900 ${item.textColor || 'group-hover:text-prism-accent'} transition-colors duration-300`}>{item.title}</h3>
+              <p className="text-xs md:text-sm leading-relaxed text-gray-700 group-hover:text-gray-900 transition-colors duration-300">{item.desc}</p>
+            </div>
+            
+            <div className={`mt-4 pt-4 border-t border-black/10 group-hover:border-black/20 flex items-center justify-between text-xs font-bold uppercase tracking-wider ${item.textColor || 'text-prism-accent'} transition-colors`}>
+              <span>EXPLORE SERVICE</span>
+              <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+            </div>
+          </a>
+        </BlurReveal>
+      ))}
     </div>
   </section>
 ))
